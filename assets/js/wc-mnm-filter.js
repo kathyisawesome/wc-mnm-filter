@@ -10,7 +10,7 @@
     var filter = this;
 
     this.$form   = $form;
-    this.$products = $form.find( '.products' );
+    this.$products = $form.find( '.mnm_child_products' );
     this.$filter = $form.find( '.mnm_filter_button_group' );
     this.taxonomy = this.$filter.data( 'taxonomy' );
 
