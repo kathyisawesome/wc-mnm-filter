@@ -68,12 +68,6 @@ class WC_MNM_Filter {
 	 */
 	public static function load_plugin() {
 
-		// Check dependencies.
-		if ( ! function_exists( 'WC_Mix_and_Match' ) || version_compare( WC_Mix_and_Match()->version, self::$req_mnm_version ) < 0 ) {
-			add_action( 'admin_notices', array( __CLASS__, 'version_notice' ) );
-			return false;
-		}
-
 		/*
 		 * Admin.
 		 */
