@@ -14,30 +14,36 @@
  * @author  Kathy Darling
  * @package WooCommerce Mix and Match Filter/Templates
  * @since   1.0.0
- * @version 1.0.0
+ * @version 1.1.0
  */
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ){
 	exit;
 }
 ?>
-<?php 
+<?php
 
-$terms = get_terms( 'product_cat', array( 'orderby' => 'name' ) );
+if( $terms && ! is_wp_error( $terms ) ) { ?>
 
-if( $terms && ! is_wp_error( $terms ) ) {
+	<div class="mnm_filter_button_group" style="display:none" data-taxonomy="<?php echo esc_attr( $taxonomy ); ?>">
 
-	echo '<div class="mnm-filter-button-group" style="display:none">';
+		<p><?php _e( 'Filter by:', 'wc-mnm-filter' ); ?></p>
 
-		echo '<p>' . __( 'Filter by:', 'wc-mnm-filter' ) . '</p>';
+  		<ul class="mnm_filters">
 
-  		echo '<button class="selected" data-filter="*">' . __( 'Show all', 'wc-mnm-filter' ) . '</button>';
+  		<li><button class="selected" data-filter="*"><?php esc_html_e( 'Show all', 'wc-mnm-filter' ); ?></button></li>
+
+		<?php
 
 		foreach( $terms as $term ) {
-			printf( '<button data-filter="%s">%s</button>', $term->slug, $term->name ); 
+			printf( '<li><button data-filter="%s">%s</button></li>', $term->slug, $term->name ); 
 		}
 
-	echo '</div>';
+		?>
 
+		</ul>
+
+	</div>
+<?php
 }
 

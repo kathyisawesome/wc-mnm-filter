@@ -173,16 +173,22 @@ class WC_MNM_Filter {
 
 				?>
 				<style type="text/css">
-					.mnm-filter-button-group {
+					.mnm_filter_button_group ul {
 						margin-bottom: 2em;
-					} 
-					.mnm-filter-button-group button {
+						padding: 0;
+						list-style: none;
+						overflow: hidden;
+					}
+					.mnm_filter_button_group li {
+						float: left;
+					}
+					.mnm_filter_button_group button {
 						margin: 0 .5em .5em 0;
 						padding: .25em .5em;
 						background: gray;
 						}
 
-					.mnm-filter-button-group button.selected {
+					.mnm_filter_button_group button.selected {
 						background: black;
 					}
 				</style>
@@ -192,8 +198,10 @@ class WC_MNM_Filter {
 				wc_get_template(
 					'single-product/mnm/options-filter.php',
 					array(
-						'container'	      => $product,
-						'layout'  		  => $product->get_layout()
+						'container' => $product,
+						'layout'    => $product->get_layout(),
+						'taxonomy'	=> $taxonomy,
+						'terms'     => get_terms( $taxonomy, array( 'orderby' => 'name' ) )
 					),
 					'',
 					self::plugin_path() . '/templates/'
