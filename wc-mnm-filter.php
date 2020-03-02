@@ -171,29 +171,34 @@ class WC_MNM_Filter {
 				self::$attribute = $taxonomy;
 				add_filter( 'woocommerce_post_class', array( __CLASS__, 'term_classes' ), 10, 2 );
 
-				?>
-				<style type="text/css">
-					.mnm_filter_button_group ul {
-						margin-bottom: 2em;
-						padding: 0;
-						list-style: none;
-						overflow: hidden;
-					}
-					.mnm_filter_button_group li {
-						float: left;
-					}
-					.mnm_filter_button_group button {
-						margin: 0 .5em .5em 0;
-						padding: .25em .5em;
-						background: gray;
-						}
+				if( apply_filters( 'wc_mnm_filter_display_inline_styles', true, $product ) ) {
 
-					.mnm_filter_button_group button.selected {
-						background: black;
-					}
-				</style>
-				
+				?>
+					<style type="text/css">
+						.mnm_filter_button_group ul {
+							margin-bottom: 2em;
+							padding: 0;
+							list-style: none;
+							overflow: hidden;
+						}
+						.mnm_filter_button_group li {
+							float: left;
+						}
+						.mnm_filter_button_group button {
+							margin: 0 .5em .5em 0;
+							padding: .25em .5em;
+							background: gray;
+							}
+
+						.mnm_filter_button_group button.selected {
+							background: black;
+						}
+					</style>
+					
 				<?php
+
+				}
+
 				// Load the navigation template.
 				wc_get_template(
 					'single-product/mnm/options-filter.php',
@@ -206,11 +211,9 @@ class WC_MNM_Filter {
 					'',
 					self::plugin_path() . '/templates/'
 				);
+
 		}
 	}
-
-	
-
 
 	/**
 	 * Remove the post_class filter
