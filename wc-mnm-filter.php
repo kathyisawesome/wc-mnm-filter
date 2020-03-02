@@ -3,20 +3,20 @@
 * Plugin Name: WooCommerce Mix and Match: Isotope Filter
 * Plugin URI: https://woocommerce.com/products/woocommerce-mix-and-match-products/
 * Description: Dynmamic Category Filtering for WooCommerce Mix and Match Products.
-* Version: 1.0.0.beta.1
+* Version: 1.1.0
 * Author: Kathy Darling
 * Author URI: http://kathyisawesome.com/
 *
 * Text Domain: wc-mnm-filter
 * Domain Path: /languages/
 *
-* Requires at least: 4.9
-* Tested up to: 5.1
+* Requires at least: 5.0
+* Tested up to: 5.3
 *
-* WC requires at least: 3.4
-* WC tested up to: 3.4.5
+* WC requires at least: 3.9
+* WC tested up to: 4.0.0
 *
-* Copyright: © 2019 Kathy Darling
+* Copyright: © 2029 Kathy Darling
 * License: GNU General Public License v3.0
 * License URI: http://www.gnu.org/licenses/gpl-3.0.html
 */
@@ -33,7 +33,7 @@ class WC_MNM_Filter {
 	 *
 	 * @var string
 	 */
-	public static $version = '1.0.0.beta.1';
+	public static $version = '1.1.0';
 
 	/**
 	 * Min required MNM version.
