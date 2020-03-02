@@ -169,7 +169,7 @@ class WC_MNM_Filter {
 		if( $product->is_type( 'mix-and-match' ) && ( $taxonomy = $product->get_meta( '_mnm_filter', true ) ) ) {
 
 				self::$attribute = $taxonomy;
-				add_filter( 'woocommerce_post_class', array( __CLASS__, 'term_classes' ), 10, 2 );
+				add_filter( 'post_class', array( __CLASS__, 'term_classes' ), 10, 2 );
 
 				if( apply_filters( 'wc_mnm_filter_display_inline_styles', true, $product ) ) {
 
@@ -221,20 +221,20 @@ class WC_MNM_Filter {
 	 * @param  WC_Product_Mix_and_Match  $product
 	 */
 	public static function remove_post_class_filter( $product ) {
-		remove_filter( 'woocommerce_post_class', array( __CLASS__, 'term_classes' ), 10, 2 );
+		remove_filter( 'post_class', array( __CLASS__, 'term_classes' ), 10, 2 );
 		self::$attribute = '';
 	}
 
 	/**
 	 * Add attributes to the children's post_class
 	 *
-	 * @param array      $class Array of CSS classes.
-	 * @param WC_Product $product Product object.
+	 * @param array $class Array of CSS classes.
+	 * @param int   $product_id Product ID.
 	 * @return array
 	 */
-	public static function term_classes( $classes, $product ) {
+	public static function term_classes( $classes, $product_id ) {
 		if( self::$attribute && ! in_array( self::$attribute, array( 'product_cat', 'product_tag' ) ) ) {
-			$classes = array_merge( $classes, wc_get_product_taxonomy_class( (array) get_the_terms( $product->get_id(), self::$attribute ), self::$attribute ) );
+			$classes = array_merge( $classes, wc_get_product_taxonomy_class( (array) get_the_terms( $product_id, self::$attribute ), self::$attribute ) );
 		}
 		return $classes;
 	}
