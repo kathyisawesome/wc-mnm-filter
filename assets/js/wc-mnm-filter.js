@@ -32,8 +32,9 @@
        */
       this.bind_event_handlers();
 
-
-      
+      /**
+       * Display filter.
+       */  
       this.$filter.show();
 
     };
@@ -42,10 +43,9 @@
     /**
      * Remove empty buttons before display.
      */
-
     this.hide_empty_buttons = function() {
 
-      $( '.mnm-filter-button-group button' ).each( function (i) {
+      $( '.mnm_filter_button_group button' ).each( function (i) {
         
         var filterValue = $(this).attr( 'data-filter' );
 
