@@ -36,11 +36,11 @@ class WC_MNM_Filter {
 	public static $version = '1.0.0.beta.1';
 
 	/**
-	 * Min required PB version.
+	 * Min required MNM version.
 	 *
 	 * @var string
 	 */
-	public static $req_mnm_version = '1.4.0';
+	public static $req_mnm_version = '1.9.0-beta';
 
 	/**
 	 * Plugin URL.
