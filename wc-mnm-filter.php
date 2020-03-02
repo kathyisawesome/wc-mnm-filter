@@ -50,6 +50,13 @@ class WC_MNM_Filter {
 	public static $product_taxonomies = array();
 
 	/**
+	 * Filter attribute.
+	 *
+	 * @var array
+	 */
+	public static $attribute = '';
+
+	/**
 	 * Fire in the hole!
 	 */
 	public static function init() {
@@ -80,6 +87,7 @@ class WC_MNM_Filter {
 
 		// Switch the quantity input.
 		add_action( 'woocommerce_mnm_content_loop', array( __CLASS__, 'add_filter_navigation' ), 5 );
+		add_action( 'woocommerce_mnm_content_loop', array( __CLASS__, 'remove_post_class_filter' ), 99 );
 
 		// Register Scripts.
 		add_action( 'wp_enqueue_scripts', array( __CLASS__, 'register_scripts' ) );
@@ -160,6 +168,9 @@ class WC_MNM_Filter {
 
 		if( $product->is_type( 'mix-and-match' ) && ( $taxonomy = $product->get_meta( '_mnm_filter', true ) ) ) {
 
+				self::$attribute = $taxonomy;
+				add_filter( 'woocommerce_post_class', array( __CLASS__, 'term_classes' ), 10, 2 );
+
 				?>
 				<style type="text/css">
 					.mnm-filter-button-group {
@@ -193,7 +204,30 @@ class WC_MNM_Filter {
 	
 
 
+	/**
+	 * Remove the post_class filter
+	 *
+	 * @param  WC_Product_Mix_and_Match  $product
+	 */
+	public static function remove_post_class_filter( $product ) {
+		remove_filter( 'woocommerce_post_class', array( __CLASS__, 'term_classes' ), 10, 2 );
+		self::$attribute = '';
+	}
 
+	/**
+	 * Add attributes to the children's post_class
+	 *
+	 * @param array      $class Array of CSS classes.
+	 * @param WC_Product $product Product object.
+	 * @return array
+	 */
+	public static function term_classes( $classes, $product ) {
+		if( self::$attribute && ! in_array( self::$attribute, array( 'product_cat', 'product_tag' ) ) ) {
+			$classes = array_merge( $classes, wc_get_product_taxonomy_class( (array) get_the_terms( $product->get_id(), self::$attribute ), self::$attribute ) );
+		}
+		return $classes;
+	}
+	
 	/*-----------------------------------------------------------------------------------*/
 	/* Scripts and Styles */
 	/*-----------------------------------------------------------------------------------*/
