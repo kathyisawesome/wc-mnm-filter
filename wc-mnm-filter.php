@@ -42,23 +42,6 @@ class WC_MNM_Filter {
 	 */
 	public static $req_mnm_version = '1.9.0-beta';
 
-	/**
-	 * Plugin URL.
-	 *
-	 * @return string
-	 */
-	public static function plugin_url() {
-		return plugins_url( basename( plugin_dir_path( __FILE__ ) ), basename(__FILE__) );
-	}
-
-	/**
-	 * Plugin path.
-	 *
-	 * @return string
-	 */
-	public static function plugin_path() {
-		return untrailingslashit( plugin_dir_path( __FILE__ ) );
-	}
 
 	/**
 	 * Fire in the hole!
@@ -220,6 +203,29 @@ class WC_MNM_Filter {
 		$l10n = array( 'columns' => apply_filters( 'woocommerce_mnm_grid_layout_columns', 3, $product ) );
 		
 		wp_localize_script( 'wc-mnm-filter', 'WC_MNM_FILTER_PARAMS', $l10n );
+	}
+
+
+	/*-----------------------------------------------------------------------------------*/
+	/* Helper Functions                                                                  */
+	/*-----------------------------------------------------------------------------------*/
+
+	/**
+	 * Plugin URL.
+	 *
+	 * @return string
+	 */
+	public static function plugin_url() {
+		return plugins_url( basename( plugin_dir_path( __FILE__ ) ), basename(__FILE__) );
+	}
+
+	/**
+	 * Plugin path.
+	 *
+	 * @return string
+	 */
+	public static function plugin_path() {
+		return untrailingslashit( plugin_dir_path( __FILE__ ) );
 	}
 
 }
