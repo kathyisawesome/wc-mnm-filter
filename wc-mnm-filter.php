@@ -42,6 +42,12 @@ class WC_MNM_Filter {
 	 */
 	public static $req_mnm_version = '1.9.0-beta';
 
+	/**
+	 * Product Taxonomies.
+	 *
+	 * @var array
+	 */
+	public static $product_taxonomies = array();
 
 	/**
 	 * Fire in the hole!
@@ -69,7 +75,7 @@ class WC_MNM_Filter {
 		add_action( 'init', array( __CLASS__, 'load_plugin_textdomain' ) );
 
 		// Add extra meta.
-		add_action( 'woocommerce_mnm_product_options', array( __CLASS__, 'additional_container_option') , 7, 2 );
+		add_action( 'woocommerce_mnm_product_options', array( __CLASS__, 'additional_container_option' ) , 7, 2 );
 		add_action( 'woocommerce_admin_process_product_object', array( __CLASS__, 'process_meta' ), 20 );
 
 		// Switch the quantity input.
@@ -112,22 +118,31 @@ class WC_MNM_Filter {
 	 * @param  WC_Product_Mix_and_Match  $mnm_product_object
 	 */
 	public static function additional_container_option( $post_id, $mnm_product_object ) {
-		woocommerce_wp_checkbox( array(
-			'id'            => '_mnm_filter',
-			'label'       => __( 'Add isotope filtering to container options', 'wc-mnm-filter' )
+
+		$value = $mnm_product_object->get_meta( '_mnm_filter', true );
+
+		// Previous version was strictly categories so convert.
+		$value = $value === 'yes' ? 'product_cat' : $value;
+
+		woocommerce_wp_select( array(
+			'id'      => '_mnm_filter',
+			'label'   => __( 'Filter container options by taxonomy', 'wc-mnm-filter' ),
+			'options' => self::get_product_taxonomies(),
+			'value'   => $value
 		) );
 	}
 
 	/**
 	 * Saves the new meta field.
 	 *
-	 * @param  WC_Product_Mix_and_Match  $mnm_product_object
+	 * @param  WC_Product_Mix_and_Match  $product
 	 */
 	public static function process_meta( $product ) {
-		if( isset( $_POST[ '_mnm_filter' ] ) ) {
-			$product->update_meta_data( '_mnm_filter', 'yes' );
+
+		if( isset( $_POST[ '_mnm_filter' ] ) && array_key_exists( $_POST[ '_mnm_filter' ], self::get_product_taxonomies() ) ) {
+			$product->update_meta_data( '_mnm_filter', sanitize_text_field( $_POST[ '_mnm_filter' ] ) );
 		} else {
-			$product->update_meta_data( '_mnm_filter', 'no' );
+			$product->delete_meta_data( '_mnm_filter' );
 		}
 	}
 
@@ -226,6 +241,34 @@ class WC_MNM_Filter {
 	 */
 	public static function plugin_path() {
 		return untrailingslashit( plugin_dir_path( __FILE__ ) );
+	}
+
+	/**
+	 * Fetch and stash the taxonomies for products.
+	 *
+	 * @param int $post_id
+	 * @param  WC_Product_Mix_and_Match  $mnm_product_object
+	 */
+	public static function get_product_taxonomies() {
+
+		if( empty( self::$product_taxonomies ) ) {
+
+			$args = array(
+			    'object_type' => array( 'product' ),
+			);
+			
+			$taxonomies = get_taxonomies( $args, 'object' );
+
+			unset( $taxonomies['product_type'] );
+
+			$taxonomies = wp_list_pluck( $taxonomies, 'label', 'name' );
+
+			self::$product_taxonomies = array_merge( array( '' => __( 'No filter', 'wc-mnm-filter' ) ), $taxonomies );
+
+		}
+
+		return self::$product_taxonomies;
+
 	}
 
 }
