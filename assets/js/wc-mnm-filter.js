@@ -13,6 +13,8 @@
     this.$productWrap = $form.find( '.mnm_child_products' );
     this.$products = this.$productWrap.find( '.mnm_item' );
     this.$filter   = $form.find( '.mnm_filter_button_group' );
+    this.$showAll  = this.$filter.find( 'button[data-filter="*"]' );
+    this.$buttons  = this.$filter.find( 'button[data-filter!="*"]' );
     this.taxonomy  = this.$filter.data( 'taxonomy' );
     this.$error    = $( '<div style="display:none" class="mnm_filter_error"></div>' );
 
@@ -92,24 +94,43 @@
 
       e.preventDefault();
 
-      // Remove all existing classes.
-      filter.$filter.find( 'button' ).removeClass( 'selected' );
+      $(this).toggleClass( 'selected' );
 
-      $(this).addClass( 'selected' );
-      
-      var filterValue = $(this).data( 'filter' );
-      var $matches = filter.$products.filter( filter.classTerm + filterValue );
-      
-      if( '*' === filterValue ) {
+      // Get all selected terms.
+      var $selected = filter.$buttons.filter( '.selected' );
+       
+      // If "show all" (or no selection) remove classes and show all products.
+      if( '*' === $(this).data( 'filter' ) || $selected.length === 0 ) {
+
+        filter.$buttons.removeClass( 'selected' );
+        filter.$showAll.addClass( 'selected' );
+        filter.$productWrap.show();
         filter.$products.show();
         filter.$error.hide();
-      } elseif ( ! $matches.length ) {
-        filter.$products.hide();
-        $matches.show();
+
       } else {
+
+        var findClass = [];
+
+        filter.$showAll.removeClass( 'selected' );
+
+        $selected.each( function(i) {
+          findClass.push( filter.classTerm + $(this).data( 'filter' ) );
+        });
+
+        var $matches = filter.$products.filter( findClass.join('') );
+
+        if( $matches.length ) {
+          filter.$productWrap.show();
+          filter.$error.hide();
+        } else {
+          filter.$productWrap.hide();
+          filter.$error.show();
+        }
+
         filter.$products.hide();
         $matches.show();
-        filter.$error.hide();
+
       }
 
       // Fix grid layout classes.
