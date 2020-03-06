@@ -9,10 +9,11 @@
 
     var filter = this;
 
-    this.$form   = $form;
-    this.$products = $form.find( '.mnm_child_products' );
-    this.$filter = $form.find( '.mnm_filter_button_group' );
-    this.taxonomy = this.$filter.data( 'taxonomy' );
+    this.$form     = $form;
+    this.$productWrap = $form.find( '.mnm_child_products' );
+    this.$products = this.$productWrap.find( '.mnm_item' );
+    this.$filter   = $form.find( '.mnm_filter_button_group' );
+    this.taxonomy  = this.$filter.data( 'taxonomy' );
 
     // @todo- When MNM supports custom data attrs, use that instead of classes.
     this.classTerm = '.' + this.taxonomy + '-';
@@ -35,7 +36,7 @@
       /**
        * Display filter.
        */  
-      this.$filter.show();
+      this.maybe_display();
 
     };
 
@@ -45,15 +46,26 @@
      */
     this.hide_empty_buttons = function() {
 
+      var count_visible = 0;
+
       $( '.mnm_filter_button_group button' ).each( function (i) {
         
-        var filterValue = $(this).attr( 'data-filter' );
+        var filterValue = $(this).data( 'filter' );
 
-        if( '*' != filterValue && ! filter.$products.find( filter.classTerm + filterValue ).length ) {
+        // Skip the "show all" button.
+        if( '*' === filterValue ) {
+          return true;
+        }
+
+        if( ! filter.$products.filter( filter.classTerm + filterValue ).length ) {
           $(this).hide();
+        } else {
+          count_visible++;
         }
 
       });
+
+      filter.$filter.data( 'visible', count_visible );
 
     }
 
@@ -103,6 +115,18 @@
       }
 
     };
+
+    /**
+     * Remove empty buttons before display.
+     */
+    this.maybe_display = function() {
+
+      // Only show "show all" if other buttons exist.
+      if( filter.$filter.data( 'visible' ) ) {
+        filter.$filter.show();
+      }
+
+    }
 
     // Launch.
     this.initialize();
