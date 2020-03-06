@@ -256,7 +256,10 @@ class WC_MNM_Filter {
 		
 		wp_enqueue_script( 'wc-mnm-filter' );
 		
-		$l10n = array( 'columns' => apply_filters( 'woocommerce_mnm_grid_layout_columns', 3, $product ) );
+		$l10n = array( 
+			'columns'         => apply_filters( 'woocommerce_mnm_grid_layout_columns', 3, $product ),
+			'i18n_no_matches' => __( 'No matching products were found', 'wc-mnm-filter' )
+		);
 		
 		wp_localize_script( 'wc-mnm-filter', 'WC_MNM_FILTER_PARAMS', $l10n );
 	}

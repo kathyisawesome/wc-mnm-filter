@@ -14,6 +14,7 @@
     this.$products = this.$productWrap.find( '.mnm_item' );
     this.$filter   = $form.find( '.mnm_filter_button_group' );
     this.taxonomy  = this.$filter.data( 'taxonomy' );
+    this.$error    = $( '<div style="display:none" class="mnm_filter_error"></div>' );
 
     // @todo- When MNM supports custom data attrs, use that instead of classes.
     this.classTerm = '.' + this.taxonomy + '-';
@@ -37,6 +38,11 @@
        * Display filter.
        */  
       this.maybe_display();
+
+      /**
+       * Insert error notice.
+       */
+      this.$error.html( WC_MNM_FILTER_PARAMS.i18n_no_matches ).hide().insertAfter( this.$filter );
 
     };
 
@@ -94,11 +100,16 @@
       var filterValue = $(this).data( 'filter' );
       var $matches = filter.$products.filter( filter.classTerm + filterValue );
       
-      if( '*' === filterValue || ! $matches.length ) {
+      if( '*' === filterValue ) {
         filter.$products.show();
+        filter.$error.hide();
+      } elseif ( ! $matches.length ) {
+        filter.$products.hide();
+        $matches.show();
       } else {
         filter.$products.hide();
         $matches.show();
+        filter.$error.hide();
       }
 
       // Fix grid layout classes.
