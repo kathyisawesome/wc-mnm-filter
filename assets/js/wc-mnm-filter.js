@@ -92,12 +92,13 @@
       $(this).addClass( 'selected' );
       
       var filterValue = $(this).data( 'filter' );
+      var $matches = filter.$products.filter( filter.classTerm + filterValue );
       
-      if( '*' == filterValue ) {
-        filter.$products.find( '.mnm_item' ).show();
+      if( '*' === filterValue || ! $matches.length ) {
+        filter.$products.show();
       } else {
-        filter.$products.find( '.mnm_item' ).hide();
-        filter.$products.find( filter.classTerm + filterValue ).show();
+        filter.$products.hide();
+        $matches.show();
       }
 
       // Fix grid layout classes.
@@ -106,8 +107,9 @@
         var columns = WC_MNM_FILTER_PARAMS.columns;
 
         // Restore first/last loop classes
-        filter.$products.find( '.mnm_item' ).removeClass( 'first' ).removeClass( 'last' );
-        filter.$products.find( '.mnm_item:visible' ).each( function (i) {
+        filter.$products.removeClass( 'first' ).removeClass( 'last' );
+
+        filter.$products.filter( ':visible' ).each( function (i) {
         if ( i== 0 || (i+1) % columns == 0 ) $(this).addClass( 'first' );
           if ( (i+1) % columns == 0 ) $(this).addClass( 'last' );
         });
