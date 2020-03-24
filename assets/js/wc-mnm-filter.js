@@ -5,14 +5,14 @@
   /**
    * Main container object.
    */
-  function WC_MNM_Filter( $form ) {
+  function WC_MNM_Filter( container ) {
 
     var filter = this;
 
-    this.$form     = $form;
-    this.$productWrap = $form.find( '.mnm_child_products' );
+    this.$form     = container.$mnm_form;
+    this.$productWrap = this.$form.find( '.mnm_child_products' );
     this.$products = this.$productWrap.find( '.mnm_item' );
-    this.$filter   = $form.find( '.mnm_filter_button_group' );
+    this.$filter   = this.$form.find( '.mnm_filter_button_group' );
     this.$showAll  = this.$filter.find( 'button[data-filter="*"]' );
     this.$buttons  = this.$filter.find( 'button[data-filter!="*"]' );
     this.taxonomy  = this.$filter.data( 'taxonomy' );
@@ -171,29 +171,8 @@
   /*  Initialization.                                                */
   /*-----------------------------------------------------------------*/
 
-  jQuery( document ).ready( function($) {
-  
-    /*
-     * Initialize form script.
-     */
-    $( '.mnm_form' ).each( function() {
-      new WC_MNM_Filter( $(this) );
-    } );
-
-    /**
-     * QuickView compatibility.
-     */
-    $( 'body' ).on( 'quick-view-displayed', function() {
-
-      $( '.mnm_form' ).each( function() {
-        new WC_MNM_Filter( $(this) );
-      } );
-
-    } );
-
-  } );
+  $( 'body' ).on( 'wc-mnm-initializing', function( e, container ) {
+    new WC_MNM_Filter( container );
+  });
 
 } ) ( jQuery );
-
-
-
