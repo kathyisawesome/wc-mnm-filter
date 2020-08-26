@@ -40,7 +40,7 @@ class WC_MNM_Filter {
 	 *
 	 * @var string
 	 */
-	public static $req_mnm_version = '1.9.0-beta';
+	public static $req_mnm_version = '1.9.0';
 
 	/**
 	 * Product Taxonomies.
