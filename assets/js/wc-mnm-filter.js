@@ -94,6 +94,10 @@
 
       e.preventDefault();
 
+      if ( ! WC_MNM_FILTER_PARAMS.multi_terms ) {
+        filter.$buttons.removeClass( 'selected' );
+      }
+
       $(this).toggleClass( 'selected' );
 
       // Get all selected terms.

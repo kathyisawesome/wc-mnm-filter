@@ -258,7 +258,8 @@ class WC_MNM_Filter {
 		
 		$l10n = array( 
 			'columns'         => apply_filters( 'woocommerce_mnm_grid_layout_columns', 3, $product ),
-			'i18n_no_matches' => __( 'No matching products were found', 'wc-mnm-filter' )
+			'i18n_no_matches' => __( 'No matching products were found', 'wc-mnm-filter' ),
+			'multi_terms'     => apply_filters( 'wc_mnm_filters_support_multi_term_filtering', true, $product ),
 		);
 		
 		wp_localize_script( 'wc-mnm-filter', 'WC_MNM_FILTER_PARAMS', $l10n );
