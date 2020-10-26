@@ -81,7 +81,8 @@ class WC_MNM_Filter {
 
 		// Switch the quantity input.
 		add_action( 'woocommerce_mnm_content_loop', array( __CLASS__, 'add_filter_navigation' ), 5 );
-		add_action( 'woocommerce_mnm_content_loop', array( __CLASS__, 'remove_post_class_filter' ), 99 );
+		add_action( 'woocommerce_before_mnm_items', array( __CLASS__, 'add_post_class_filter' ) );
+		add_action( 'woocommerce_after_mnm_items', array( __CLASS__, 'remove_post_class_filter' ) );
 
 		// Register Scripts.
 		add_action( 'wp_enqueue_scripts', array( __CLASS__, 'register_scripts' ) );
@@ -141,7 +142,7 @@ class WC_MNM_Filter {
 	 */
 	public static function process_meta( $product ) {
 
-		if( isset( $_POST[ '_mnm_filter' ] ) && array_key_exists( $_POST[ '_mnm_filter' ], self::get_product_taxonomies() ) ) {
+		if ( isset( $_POST[ '_mnm_filter' ] ) && array_key_exists( $_POST[ '_mnm_filter' ], self::get_product_taxonomies() ) ) {
 			$product->update_meta_data( '_mnm_filter', sanitize_text_field( $_POST[ '_mnm_filter' ] ) );
 		} else {
 			$product->delete_meta_data( '_mnm_filter' );
@@ -160,12 +161,9 @@ class WC_MNM_Filter {
 	 */
 	public static function add_filter_navigation( $product ) {
 
-		if( $product->is_type( 'mix-and-match' ) && ( $taxonomy = $product->get_meta( '_mnm_filter', true ) ) ) {
+		if ( $product->is_type( 'mix-and-match' ) && ( $taxonomy = $product->get_meta( '_mnm_filter', true ) ) ) {
 
-				self::$attribute = $taxonomy;
-				add_filter( 'post_class', array( __CLASS__, 'term_classes' ), 10, 2 );
-
-				if( apply_filters( 'wc_mnm_filter_display_inline_styles', true, $product ) ) {
+				if ( apply_filters( 'wc_mnm_filter_display_inline_styles', true, $product ) ) {
 
 				?>
 					<style type="text/css">
@@ -209,27 +207,53 @@ class WC_MNM_Filter {
 		}
 	}
 
+
+	/**
+	 * Add the post_class filter
+	 *
+	 * @param  WC_Product_Mix_and_Match  $product
+	 */
+	public static function add_post_class_filter( $product ) {
+		$attribute = $product->get_meta( '_mnm_filter', true );
+
+		if ( $attribute ) {
+			self::$attribute = $attribute;
+			add_filter( 'post_class', array( __CLASS__, 'term_classes' ), 10, 3 );
+		}
+	}
+
 	/**
 	 * Remove the post_class filter
 	 *
 	 * @param  WC_Product_Mix_and_Match  $product
 	 */
 	public static function remove_post_class_filter( $product ) {
-		remove_filter( 'post_class', array( __CLASS__, 'term_classes' ), 10, 2 );
+		remove_filter( 'post_class', array( __CLASS__, 'term_classes' ), 10, 3 );
 		self::$attribute = '';
 	}
 
 	/**
 	 * Add attributes to the children's post_class
 	 *
-	 * @param array $class Array of CSS classes.
-	 * @param int   $product_id Product ID.
+	 * @param string[] $classes An array of post class names.
+     * @param string[] $class   An array of additional class names added to the post.
+     * @param int      $post_id The post ID.
 	 * @return array
 	 */
-	public static function term_classes( $classes, $product_id ) {
-		if( self::$attribute && ! in_array( self::$attribute, array( 'product_cat', 'product_tag' ) ) ) {
-			$classes = array_merge( $classes, wc_get_product_taxonomy_class( (array) get_the_terms( $product_id, self::$attribute ), self::$attribute ) );
+	public static function term_classes( $classes, $class, $post_id ) {
+		
+		if ( self::$attribute ) {
+
+			// If variation.
+			$post_parent_id = wp_get_post_parent_id( $post_id );
+
+			if ( $post_parent_id > 0 || ! in_array( self::$attribute, array( 'product_cat', 'product_tag' ) ) ) {
+				$post_id = $post_parent_id;
+				$classes = array_merge( $classes, wc_get_product_taxonomy_class( (array) get_the_terms( $post_id, self::$attribute ), self::$attribute ) );
+			}
+
 		}
+
 		return $classes;
 	}
 	
@@ -251,7 +275,7 @@ class WC_MNM_Filter {
 	 * Load the script anywhere the MNN add to cart button is displayed
 	 * @return void
 	 */
-	public static function load_scripts(){
+	public static function load_scripts() {
 		global $product;
 		
 		wp_enqueue_script( 'wc-mnm-filter' );
