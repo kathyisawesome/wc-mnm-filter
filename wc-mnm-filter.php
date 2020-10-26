@@ -142,7 +142,7 @@ class WC_MNM_Filter {
 	 */
 	public static function process_meta( $product ) {
 
-		if( isset( $_POST[ '_mnm_filter' ] ) && array_key_exists( $_POST[ '_mnm_filter' ], self::get_product_taxonomies() ) ) {
+		if ( isset( $_POST[ '_mnm_filter' ] ) && array_key_exists( $_POST[ '_mnm_filter' ], self::get_product_taxonomies() ) ) {
 			$product->update_meta_data( '_mnm_filter', sanitize_text_field( $_POST[ '_mnm_filter' ] ) );
 		} else {
 			$product->delete_meta_data( '_mnm_filter' );
@@ -161,9 +161,9 @@ class WC_MNM_Filter {
 	 */
 	public static function add_filter_navigation( $product ) {
 
-		if( $product->is_type( 'mix-and-match' ) && ( $taxonomy = $product->get_meta( '_mnm_filter', true ) ) ) {
+		if ( $product->is_type( 'mix-and-match' ) && ( $taxonomy = $product->get_meta( '_mnm_filter', true ) ) ) {
 
-				if( apply_filters( 'wc_mnm_filter_display_inline_styles', true, $product ) ) {
+				if ( apply_filters( 'wc_mnm_filter_display_inline_styles', true, $product ) ) {
 
 				?>
 					<style type="text/css">
@@ -275,7 +275,7 @@ class WC_MNM_Filter {
 	 * Load the script anywhere the MNN add to cart button is displayed
 	 * @return void
 	 */
-	public static function load_scripts(){
+	public static function load_scripts() {
 		global $product;
 		
 		wp_enqueue_script( 'wc-mnm-filter' );
