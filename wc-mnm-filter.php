@@ -40,7 +40,14 @@ class WC_MNM_Filter {
 	 *
 	 * @var string
 	 */
-	public static $req_mnm_version = '1.9.0';
+	public static $req_mnm_version = '1.11.0';
+
+/**
+	 * MNM URL.
+	 *
+	 * @var string
+	 */
+	private static $mnm_url = 'https://woocommerce.com/products/woocommerce-mix-and-match-products/';
 
 	/**
 	 * Product Taxonomies.
@@ -60,13 +67,19 @@ class WC_MNM_Filter {
 	 * Fire in the hole!
 	 */
 	public static function init() {
-		add_action( 'plugins_loaded', array( __CLASS__, 'load_plugin' ) );
+		add_action( 'plugins_loaded', array( __CLASS__, 'load_plugin' ), 20 );
 	}
 
 	/**
 	 * Hooks.
 	 */
 	public static function load_plugin() {
+
+		// Check dependencies.
+		if ( ! function_exists( 'WC_Mix_and_Match' ) || version_compare( WC_Mix_and_Match()->version, self::$req_mnm_version ) < 0 ) {
+			add_action( 'admin_notices', array( __CLASS__, 'version_notice' ) );
+			return false;
+		}
 
 		/*
 		 * Admin.
@@ -113,6 +126,12 @@ class WC_MNM_Filter {
 	/* Admin */
 	/*-----------------------------------------------------------------------------------*/
 
+	/**
+	 * MNM version check notice.
+	 */
+	public static function version_notice() {
+		echo '<div class="error"><p>' . sprintf( __( '<strong>Mix and Match &ndash; Filters</strong> requires <a href="%1$s" target="_blank">WooCommerce Mix and Match Products</a> version <strong>%2$s</strong> or higher.', 'wc-mnm-filter' ), self::$mnm_url, self::$req_mnm_version ) . '</p></div>';
+	}
 
 	/**
 	 * Adds the container max weight option writepanel options.
