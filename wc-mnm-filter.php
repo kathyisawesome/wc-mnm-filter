@@ -54,7 +54,7 @@ class WC_MNM_Filter {
 	 *
 	 * @var array
 	 */
-	public static $product_taxonomies = array();
+	private static $product_taxonomies = array();
 
 	/**
 	 * Filter taxonomy.
@@ -266,7 +266,7 @@ class WC_MNM_Filter {
 
 			// Include attributes and any extra taxonomies only if enabled via the hook - this is a performance issue.
 			if ( false === apply_filters( 'woocommerce_get_product_class_include_taxonomies', false ) ) {
-				$taxonomies = get_taxonomies( array( 'public' => true ) );
+				$taxonomies = self::get_product_taxonomies();
 				$type       = 'variation' === $product->get_type() ? 'product_variation' : 'product';
 	
 				if ( is_object_in_taxonomy( $type, self::$taxonomy ) && ! in_array( self::$taxonomy, array( 'product_cat', 'product_tag' ), true ) ) {
