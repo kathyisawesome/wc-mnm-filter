@@ -276,7 +276,16 @@ class WC_MNM_Filter {
 
 			// If variation.
 			if ( $product->get_parent_id() > 0 ) {
-				$new_classes = wc_get_product_taxonomy_class( (array) get_the_terms( $product->get_parent_id(), self::$taxonomy ), self::$taxonomy );
+
+				$attributes = $product->get_attributes();
+
+				// If it's a variation's attribute then use that.
+				if ( array_key_exists( self::$taxonomy, $attributes ) ) {
+					$new_classes = array( self::$taxonomy . '-'. strtolower( $product->get_attribute( self::$taxonomy ) ) );
+				} else {
+					// Else inherit the parent's terms.
+					$new_classes = wc_get_product_taxonomy_class( (array) get_the_terms( $product->get_parent_id(), self::$taxonomy ), self::$taxonomy );
+				}
 			} 
 
 			if ( ! empty( $new_classes ) ) {
