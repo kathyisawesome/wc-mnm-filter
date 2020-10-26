@@ -57,11 +57,11 @@ class WC_MNM_Filter {
 	public static $product_taxonomies = array();
 
 	/**
-	 * Filter attribute.
+	 * Filter taxonomy.
 	 *
 	 * @var array
 	 */
-	public static $attribute = '';
+	private static $taxonomy = '';
 
 	/**
 	 * Fire in the hole!
@@ -233,10 +233,10 @@ class WC_MNM_Filter {
 	 * @param  WC_Product_Mix_and_Match  $product
 	 */
 	public static function add_product_class_filter( $product ) {
-		$attribute = $product->get_meta( '_mnm_filter', true );
+		$taxonomy = $product->get_meta( '_mnm_filter', true );
 
-		if ( $attribute ) {
-			self::$attribute = $attribute;
+		if ( $taxonomy ) {
+			self::$taxonomy = $taxonomy;
 			add_filter( 'woocommerce_post_class', array( __CLASS__, 'term_classes' ), 10, 3 );
 		}
 	}
@@ -248,7 +248,7 @@ class WC_MNM_Filter {
 	 */
 	public static function remove_product_class_filter( $product ) {
 		remove_filter( 'woocommerce_post_class', array( __CLASS__, 'term_classes' ), 10, 3 );
-		self::$attribute = '';
+		self::$taxonomy = '';
 	}
 
 	/**
@@ -260,7 +260,7 @@ class WC_MNM_Filter {
 	 */
 	public static function term_classes( $classes, $product ) {
 		
-		if ( self::$attribute ) {
+		if ( self::$taxonomy ) {
 
 			$new_classes = array();
 
@@ -269,14 +269,14 @@ class WC_MNM_Filter {
 				$taxonomies = get_taxonomies( array( 'public' => true ) );
 				$type       = 'variation' === $product->get_type() ? 'product_variation' : 'product';
 	
-				if ( is_object_in_taxonomy( $type, self::$attribute ) && ! in_array( self::$attribute, array( 'product_cat', 'product_tag' ), true ) ) {
-					$new_classes = wc_get_product_taxonomy_class( (array) get_the_terms( $product->get_id(), self::$attribute ), self::$attribute );
+				if ( is_object_in_taxonomy( $type, self::$taxonomy ) && ! in_array( self::$taxonomy, array( 'product_cat', 'product_tag' ), true ) ) {
+					$new_classes = wc_get_product_taxonomy_class( (array) get_the_terms( $product->get_id(), self::$taxonomy ), self::$taxonomy );
 				}
 			}
 
 			// If variation.
 			if ( $product->get_parent_id() > 0 ) {
-				$new_classes = wc_get_product_taxonomy_class( (array) get_the_terms( $product->get_parent_id(), self::$attribute ), self::$attribute );
+				$new_classes = wc_get_product_taxonomy_class( (array) get_the_terms( $product->get_parent_id(), self::$taxonomy ), self::$taxonomy );
 			} 
 
 			if ( ! empty( $new_classes ) ) {
