@@ -94,8 +94,8 @@ class WC_MNM_Filter {
 
 		// Switch the quantity input.
 		add_action( 'woocommerce_mnm_content_loop', array( __CLASS__, 'add_filter_navigation' ), 5 );
-		add_action( 'woocommerce_before_mnm_items', array( __CLASS__, 'add_post_class_filter' ) );
-		add_action( 'woocommerce_after_mnm_items', array( __CLASS__, 'remove_post_class_filter' ) );
+		add_action( 'woocommerce_before_mnm_items', array( __CLASS__, 'add_product_class_filter' ) );
+		add_action( 'woocommerce_after_mnm_items', array( __CLASS__, 'remove_product_class_filter' ) );
 
 		// Register Scripts.
 		add_action( 'wp_enqueue_scripts', array( __CLASS__, 'register_scripts' ) );
@@ -228,47 +228,59 @@ class WC_MNM_Filter {
 
 
 	/**
-	 * Add the post_class filter
+	 * Add the woocommerce_post_class filter
 	 *
 	 * @param  WC_Product_Mix_and_Match  $product
 	 */
-	public static function add_post_class_filter( $product ) {
+	public static function add_product_class_filter( $product ) {
 		$attribute = $product->get_meta( '_mnm_filter', true );
 
 		if ( $attribute ) {
 			self::$attribute = $attribute;
-			add_filter( 'post_class', array( __CLASS__, 'term_classes' ), 10, 3 );
+			add_filter( 'woocommerce_post_class', array( __CLASS__, 'term_classes' ), 10, 3 );
 		}
 	}
 
 	/**
-	 * Remove the post_class filter
+	 * Remove the woocommerce_post_class filter
 	 *
 	 * @param  WC_Product_Mix_and_Match  $product
 	 */
-	public static function remove_post_class_filter( $product ) {
-		remove_filter( 'post_class', array( __CLASS__, 'term_classes' ), 10, 3 );
+	public static function remove_product_class_filter( $product ) {
+		remove_filter( 'woocommerce_post_class', array( __CLASS__, 'term_classes' ), 10, 3 );
 		self::$attribute = '';
 	}
 
 	/**
-	 * Add attributes to the children's post_class
+	 * Add attributes to the children's woocommerce_post_class
 	 *
-	 * @param string[] $classes An array of post class names.
-     * @param string[] $class   An array of additional class names added to the post.
-     * @param int      $post_id The post ID.
+	 * @param array      $classes Array of CSS classes.
+	 * @param WC_Product $product Product object.
 	 * @return array
 	 */
-	public static function term_classes( $classes, $class, $post_id ) {
+	public static function term_classes( $classes, $product ) {
 		
 		if ( self::$attribute ) {
 
-			// If variation.
-			$post_parent_id = wp_get_post_parent_id( $post_id );
+			$new_classes = array();
 
-			if ( $post_parent_id > 0 || ! in_array( self::$attribute, array( 'product_cat', 'product_tag' ) ) ) {
-				$post_id = $post_parent_id;
-				$classes = array_merge( $classes, wc_get_product_taxonomy_class( (array) get_the_terms( $post_id, self::$attribute ), self::$attribute ) );
+			// Include attributes and any extra taxonomies only if enabled via the hook - this is a performance issue.
+			if ( false === apply_filters( 'woocommerce_get_product_class_include_taxonomies', false ) ) {
+				$taxonomies = get_taxonomies( array( 'public' => true ) );
+				$type       = 'variation' === $product->get_type() ? 'product_variation' : 'product';
+	
+				if ( is_object_in_taxonomy( $type, self::$attribute ) && ! in_array( self::$attribute, array( 'product_cat', 'product_tag' ), true ) ) {
+					$new_classes = wc_get_product_taxonomy_class( (array) get_the_terms( $product->get_id(), self::$attribute ), self::$attribute );
+				}
+			}
+
+			// If variation.
+			if ( $product->get_parent_id() > 0 ) {
+				$new_classes = wc_get_product_taxonomy_class( (array) get_the_terms( $product->get_parent_id(), self::$attribute ), self::$attribute );
+			} 
+
+			if ( ! empty( $new_classes ) ) {
+				$classes = array_merge( $classes, $new_classes );
 			}
 
 		}
