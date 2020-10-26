@@ -13,8 +13,8 @@
 * Requires at least: 5.0
 * Tested up to: 5.3
 *
-* WC requires at least: 3.9
-* WC tested up to: 4.0.0
+* WC requires at least: 4.6.0
+* WC tested up to: 4.6.0
 *
 * Copyright: © 2029 Kathy Darling
 * License: GNU General Public License v3.0
@@ -40,33 +40,46 @@ class WC_MNM_Filter {
 	 *
 	 * @var string
 	 */
-	public static $req_mnm_version = '1.9.0';
+	public static $req_mnm_version = '1.11.0';
+
+/**
+	 * MNM URL.
+	 *
+	 * @var string
+	 */
+	private static $mnm_url = 'https://woocommerce.com/products/woocommerce-mix-and-match-products/';
 
 	/**
 	 * Product Taxonomies.
 	 *
 	 * @var array
 	 */
-	public static $product_taxonomies = array();
+	private static $product_taxonomies = array();
 
 	/**
-	 * Filter attribute.
+	 * Filter taxonomy.
 	 *
 	 * @var array
 	 */
-	public static $attribute = '';
+	private static $taxonomy = '';
 
 	/**
 	 * Fire in the hole!
 	 */
 	public static function init() {
-		add_action( 'plugins_loaded', array( __CLASS__, 'load_plugin' ) );
+		add_action( 'plugins_loaded', array( __CLASS__, 'load_plugin' ), 20 );
 	}
 
 	/**
 	 * Hooks.
 	 */
 	public static function load_plugin() {
+
+		// Check dependencies.
+		if ( ! function_exists( 'WC_Mix_and_Match' ) || version_compare( WC_Mix_and_Match()->version, self::$req_mnm_version ) < 0 ) {
+			add_action( 'admin_notices', array( __CLASS__, 'version_notice' ) );
+			return false;
+		}
 
 		/*
 		 * Admin.
@@ -81,8 +94,8 @@ class WC_MNM_Filter {
 
 		// Switch the quantity input.
 		add_action( 'woocommerce_mnm_content_loop', array( __CLASS__, 'add_filter_navigation' ), 5 );
-		add_action( 'woocommerce_before_mnm_items', array( __CLASS__, 'add_post_class_filter' ) );
-		add_action( 'woocommerce_after_mnm_items', array( __CLASS__, 'remove_post_class_filter' ) );
+		add_action( 'woocommerce_before_mnm_items', array( __CLASS__, 'add_product_class_filter' ) );
+		add_action( 'woocommerce_after_mnm_items', array( __CLASS__, 'remove_product_class_filter' ) );
 
 		// Register Scripts.
 		add_action( 'wp_enqueue_scripts', array( __CLASS__, 'register_scripts' ) );
@@ -113,6 +126,12 @@ class WC_MNM_Filter {
 	/* Admin */
 	/*-----------------------------------------------------------------------------------*/
 
+	/**
+	 * MNM version check notice.
+	 */
+	public static function version_notice() {
+		echo '<div class="error"><p>' . sprintf( __( '<strong>Mix and Match &ndash; Filters</strong> requires <a href="%1$s" target="_blank">WooCommerce Mix and Match Products</a> version <strong>%2$s</strong> or higher.', 'wc-mnm-filter' ), self::$mnm_url, self::$req_mnm_version ) . '</p></div>';
+	}
 
 	/**
 	 * Adds the container max weight option writepanel options.
@@ -209,47 +228,68 @@ class WC_MNM_Filter {
 
 
 	/**
-	 * Add the post_class filter
+	 * Add the woocommerce_post_class filter
 	 *
 	 * @param  WC_Product_Mix_and_Match  $product
 	 */
-	public static function add_post_class_filter( $product ) {
-		$attribute = $product->get_meta( '_mnm_filter', true );
+	public static function add_product_class_filter( $product ) {
+		$taxonomy = $product->get_meta( '_mnm_filter', true );
 
-		if ( $attribute ) {
-			self::$attribute = $attribute;
-			add_filter( 'post_class', array( __CLASS__, 'term_classes' ), 10, 3 );
+		if ( $taxonomy ) {
+			self::$taxonomy = $taxonomy;
+			add_filter( 'woocommerce_post_class', array( __CLASS__, 'term_classes' ), 10, 3 );
 		}
 	}
 
 	/**
-	 * Remove the post_class filter
+	 * Remove the woocommerce_post_class filter
 	 *
 	 * @param  WC_Product_Mix_and_Match  $product
 	 */
-	public static function remove_post_class_filter( $product ) {
-		remove_filter( 'post_class', array( __CLASS__, 'term_classes' ), 10, 3 );
-		self::$attribute = '';
+	public static function remove_product_class_filter( $product ) {
+		remove_filter( 'woocommerce_post_class', array( __CLASS__, 'term_classes' ), 10, 3 );
+		self::$taxonomy = '';
 	}
 
 	/**
-	 * Add attributes to the children's post_class
+	 * Add attributes to the children's woocommerce_post_class
 	 *
-	 * @param string[] $classes An array of post class names.
-     * @param string[] $class   An array of additional class names added to the post.
-     * @param int      $post_id The post ID.
+	 * @param array      $classes Array of CSS classes.
+	 * @param WC_Product $product Product object.
 	 * @return array
 	 */
-	public static function term_classes( $classes, $class, $post_id ) {
+	public static function term_classes( $classes, $product ) {
 		
-		if ( self::$attribute ) {
+		if ( self::$taxonomy ) {
+
+			$new_classes = array();
+
+			// Include attributes and any extra taxonomies only if enabled via the hook - this is a performance issue.
+			if ( false === apply_filters( 'woocommerce_get_product_class_include_taxonomies', false ) ) {
+				$taxonomies = self::get_product_taxonomies();
+				$type       = 'variation' === $product->get_type() ? 'product_variation' : 'product';
+	
+				if ( is_object_in_taxonomy( $type, self::$taxonomy ) && ! in_array( self::$taxonomy, array( 'product_cat', 'product_tag' ), true ) ) {
+					$new_classes = wc_get_product_taxonomy_class( (array) get_the_terms( $product->get_id(), self::$taxonomy ), self::$taxonomy );
+				}
+			}
 
 			// If variation.
-			$post_parent_id = wp_get_post_parent_id( $post_id );
+			if ( $product->get_parent_id() > 0 ) {
 
-			if ( $post_parent_id > 0 || ! in_array( self::$attribute, array( 'product_cat', 'product_tag' ) ) ) {
-				$post_id = $post_parent_id;
-				$classes = array_merge( $classes, wc_get_product_taxonomy_class( (array) get_the_terms( $post_id, self::$attribute ), self::$attribute ) );
+				$attributes = $product->get_attributes();
+
+				// If it's a variation's attribute then use that.
+				if ( array_key_exists( self::$taxonomy, $attributes ) ) {
+					$new_classes = array( self::$taxonomy . '-'. strtolower( $product->get_attribute( self::$taxonomy ) ) );
+				} else {
+					// Else inherit the parent's terms.
+					$new_classes = wc_get_product_taxonomy_class( (array) get_the_terms( $product->get_parent_id(), self::$taxonomy ), self::$taxonomy );
+				}
+			} 
+
+			if ( ! empty( $new_classes ) ) {
+				$classes = array_merge( $classes, $new_classes );
 			}
 
 		}
