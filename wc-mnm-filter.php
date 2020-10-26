@@ -218,7 +218,7 @@ class WC_MNM_Filter {
 
 		if ( $attribute ) {
 			self::$attribute = $attribute;
-			add_filter( 'post_class', array( __CLASS__, 'term_classes' ), 10, 2 );
+			add_filter( 'post_class', array( __CLASS__, 'term_classes' ), 10, 3 );
 		}
 	}
 
@@ -228,21 +228,32 @@ class WC_MNM_Filter {
 	 * @param  WC_Product_Mix_and_Match  $product
 	 */
 	public static function remove_post_class_filter( $product ) {
-		remove_filter( 'post_class', array( __CLASS__, 'term_classes' ), 10, 2 );
+		remove_filter( 'post_class', array( __CLASS__, 'term_classes' ), 10, 3 );
 		self::$attribute = '';
 	}
 
 	/**
 	 * Add attributes to the children's post_class
 	 *
-	 * @param array $class Array of CSS classes.
-	 * @param int   $product_id Product ID.
+	 * @param string[] $classes An array of post class names.
+     * @param string[] $class   An array of additional class names added to the post.
+     * @param int      $post_id The post ID.
 	 * @return array
 	 */
-	public static function term_classes( $classes, $product_id ) {
-		if( self::$attribute && ! in_array( self::$attribute, array( 'product_cat', 'product_tag' ) ) ) {
-			$classes = array_merge( $classes, wc_get_product_taxonomy_class( (array) get_the_terms( $product_id, self::$attribute ), self::$attribute ) );
+	public static function term_classes( $classes, $class, $post_id ) {
+		
+		if ( self::$attribute ) {
+
+			// If variation.
+			$post_parent_id = wp_get_post_parent_id( $post_id );
+
+			if ( $post_parent_id > 0 || ! in_array( self::$attribute, array( 'product_cat', 'product_tag' ) ) ) {
+				$post_id = $post_parent_id;
+				$classes = array_merge( $classes, wc_get_product_taxonomy_class( (array) get_the_terms( $post_id, self::$attribute ), self::$attribute ) );
+			}
+
 		}
+
 		return $classes;
 	}
 	
