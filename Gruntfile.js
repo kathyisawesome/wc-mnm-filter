@@ -35,8 +35,7 @@ module.exports = function( grunt ) {
 					'$': false,
 					'Backbone': false,
 					'_': false,
-					'wc_bundle_params': false,
-					'wc_pb_number_round': false
+					'WC_MNM_FILTER_PARAMS': false
 				},
 			},
 			all: [
@@ -81,12 +80,12 @@ module.exports = function( grunt ) {
 				type: 'wp-plugin',
 				domainPath: 'languages',
 				potHeaders: {
-					'report-msgid-bugs-to': 'support@somewherewarm.gr'
+					'report-msgid-bugs-to': 'support@kathyisawesome.com'
 				}
 			},
 			go: {
 				options: {
-					potFilename: 'woocommerce-product-bundles-bulk-discounts.pot',
+					potFilename: 'wc-mnm-filter.pot',
 					exclude: [
 						'languages/.*',
 						'assets/.*',
@@ -100,7 +99,7 @@ module.exports = function( grunt ) {
 		// Check textdomain errors.
 		checktextdomain: {
 			options:{
-				text_domain: 'woocommerce-product-bundles-bulk-discounts',
+				text_domain: 'wc-mnm-filter',
 				keywords: [
 					'__:1,2d',
 					'_e:1,2d',
