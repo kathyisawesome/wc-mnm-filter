@@ -20,4 +20,4 @@ add_filter( 'wc_mnm_filters_support_multi_term_filtering', '__return_false' );
 
 1. This is proof of concept and not officially supported in any way.
 2. Currently, only tested with grid layout.
-3. Version 1.1 now requires Mix and Match 1.9.0.
+3. Version 1.2 now requires Mix and Match 1.10.6.
