@@ -40,7 +40,7 @@ class WC_MNM_Filter {
 	 *
 	 * @var string
 	 */
-	public static $req_mnm_version = '1.11.0';
+	public static $req_mnm_version = '1.10.6-beta-3';
 
 /**
 	 * MNM URL.
