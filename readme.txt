@@ -1,12 +1,12 @@
 === WooCommerce Mix and Match Products - Filter ===
 
 Contributors: helgatheviking
-Tags: woocommerce, product, bundle, bundles, kits, simple, configurable, filter
-Requires at least: 4.9
-Tested up to: 5.1
+Tags: woocommerce, product, container, boxes, kits, configurable, filter
+Requires at least: 5.0
+Tested up to: 5.5
 Stable tag: 1.1.3
-WC requires at least: 3.4
-WC tested up to: 3.5.4
+WC requires at least: 4.0
+WC tested up to: 4.7
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
