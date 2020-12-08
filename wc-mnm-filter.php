@@ -344,7 +344,7 @@ class WC_MNM_Filter {
 		if( empty( self::$product_taxonomies ) ) {
 
 			$args = array(
-			    'object_type' => array( 'product' ),
+			    'object_type' => array( 'product', 'global_product_addon' ),
 			);
 			
 			$taxonomies = get_taxonomies( $args, 'object' );
