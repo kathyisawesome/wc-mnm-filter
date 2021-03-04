@@ -16,7 +16,7 @@
 * WC requires at least: 4.6.0
 * WC tested up to: 4.6.0
 *
-* Copyright: © 2029 Kathy Darling
+* Copyright: © 2021 Kathy Darling
 * License: GNU General Public License v3.0
 * License URI: http://www.gnu.org/licenses/gpl-3.0.html
 */
