@@ -341,11 +341,16 @@ class WC_MNM_Filter {
 	 */
 	public static function get_product_taxonomies() {
 
-		if( empty( self::$product_taxonomies ) ) {
+		if ( empty( self::$product_taxonomies ) ) {
 
 			$args = array(
-			    'object_type' => array( 'product', 'global_product_addon' ),
+				'object_type' => array( 'product' ),
 			);
+
+			// Product Addons support.
+			if ( class_exists( 'WC_Product_Addons' ) ) {
+				$args['object_type'][] = 'global_product_addon';
+			}
 			
 			$taxonomies = get_taxonomies( $args, 'object' );
 
