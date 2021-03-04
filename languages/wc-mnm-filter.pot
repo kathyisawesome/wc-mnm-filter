@@ -1,14 +1,14 @@
-# Copyright (C) 2020 Kathy Darling
+# Copyright (C) 2021 Kathy Darling
 # This file is distributed under the GNU General Public License v3.0.
 msgid ""
 msgstr ""
-"Project-Id-Version: WooCommerce Mix and Match -  Filter by Terms 1.2.0\n"
+"Project-Id-Version: WooCommerce Mix and Match -  Filter by Terms 1.2.2\n"
 "Report-Msgid-Bugs-To: support@kathyisawesome.com\n"
-"POT-Creation-Date: 2020-10-27 15:07:05+00:00\n"
+"POT-Creation-Date: 2021-03-04 01:16:23+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2020-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2021-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "X-Generator: grunt-wp-i18n 1.0.3\n"
@@ -21,22 +21,15 @@ msgstr ""
 msgid "Show all"
 msgstr ""
 
-#: wc-mnm-filter.php:133
-msgid ""
-"<strong>Mix and Match &ndash; Filters</strong> requires <a href=\"%1$s\" "
-"target=\"_blank\">WooCommerce Mix and Match Products</a> version "
-"<strong>%2$s</strong> or higher."
-msgstr ""
-
-#: wc-mnm-filter.php:151
+#: wc-mnm-filter.php:131
 msgid "Filter container options by taxonomy"
 msgstr ""
 
-#: wc-mnm-filter.php:326
+#: wc-mnm-filter.php:306
 msgid "No matching products were found"
 msgstr ""
 
-#: wc-mnm-filter.php:376
+#: wc-mnm-filter.php:361
 msgid "No filter"
 msgstr ""
 
@@ -45,9 +38,7 @@ msgid "WooCommerce Mix and Match -  Filter by Terms"
 msgstr ""
 
 #. Plugin URI of the plugin/theme
-msgid ""
-"https://woocommerce.com/products/woocommerce-mix-and-match-products?aff=5151"
-"&cid=4951026"
+msgid "https://woocommerce.com/products/woocommerce-mix-and-match-products"
 msgstr ""
 
 #. Description of the plugin/theme

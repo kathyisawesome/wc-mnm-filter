@@ -6,7 +6,7 @@
 		"url": "https://github.com/helgatheviking/wc-mnm-filter.git"
 	},
 	"license": "GPL-3.0-or-later",
-	"version": "1.2.0",
+	"version": "1.2.2",
 	"homepage": "http://woocommerce.com/products/woocommerce-mix-and-match/",
 	"main": "Gruntfile.js",
 	"devDependencies": {
