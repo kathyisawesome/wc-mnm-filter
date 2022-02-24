@@ -11,6 +11,7 @@ sftp-config.json
 # Grunt
 /node_modules/
 /deploy/
+build/
 npm-debug.log
 
 # Sass
@@ -31,3 +32,9 @@ Thumbs.db
 # Logs
 /logs
 package-lock.json
+
+# Assets
+assets/js/frontend/*.min.js
+assets/js/admin/*.min.js
+assets/css/
+languages/
