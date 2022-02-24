@@ -269,27 +269,27 @@ module.exports = function(grunt) {
 				replacements: [
 				{
 					from: /Stable tag:.*$/m,
-					to: 'Stable tag: <%= pkg.version %>'
+					to: "Stable tag: <%= pkg.version %>"
 				},
 				{
 					from: /Version:.*$/m,
-					to: 'Version: <%= pkg.version %>'
+					to: "Version: <%= pkg.version %>"
 				},
 				{
 					from: /public \$version = \'.*.'/m,
-					to: 'public $version = <%= pkg.version %>'
+					to: "public $version = '<%= pkg.version %>'"
 				},
 				{
 					from: /public \$version = \'.*.'/m,
-					to: 'public $version = <%= pkg.version %>'
+					to: "public $version = '<%= pkg.version %>'"
 				},
 				{
 					from: /public static \$version = \'.*.'/m,
-					to: 'public static $version = <%= pkg.version %>'
+					to: "public static $version = '<%= pkg.version %>'"
 				},
 				{
 					from: /const VERSION = \'.*.'/m,
-					to: 'const VERSION = <%= pkg.version %>'
+					to: "const VERSION = '<%= pkg.version %>'"
 				}
 				]
 			}
