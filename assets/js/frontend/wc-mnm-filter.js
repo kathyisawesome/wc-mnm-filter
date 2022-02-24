@@ -56,7 +56,7 @@
 
       var count_visible = 0;
 
-      $( '.mnm_filter_button_group button' ).each( function (i) {
+      $( '.mnm_filter_button_group button' ).each( function () {
         
         var filterValue = $(this).data( 'filter' );
 
@@ -75,7 +75,7 @@
 
       filter.$filter.data( 'visible', count_visible );
 
-    }
+    };
 
 
     /**
@@ -118,7 +118,7 @@
 
         filter.$showAll.removeClass( 'selected' );
 
-        $selected.each( function(i) {
+        $selected.each( function() {
           findClass.push( filter.classTerm + $(this).data( 'filter' ) );
         });
 
@@ -146,8 +146,12 @@
         filter.$products.removeClass( 'first' ).removeClass( 'last' );
 
         filter.$products.filter( ':visible' ).each( function (i) {
-        if ( i== 0 || (i+1) % columns == 0 ) $(this).addClass( 'first' );
-          if ( (i+1) % columns == 0 ) $(this).addClass( 'last' );
+          if ( 0 === i || 0 === (i+1) % columns ) {
+            $(this).addClass( 'first' );
+          }
+          if ( 0 === (i+1) % columns ) {
+            $(this).addClass( 'last' );
+          }
         });
 
       }
@@ -164,7 +168,7 @@
         filter.$filter.show();
       }
 
-    }
+    };
 
     // Launch.
     this.initialize();
