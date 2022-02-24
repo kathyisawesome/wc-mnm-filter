@@ -6,9 +6,12 @@
 		"type": "git",
 		"url": "https://github.com/helgatheviking/wc-mnm-filter.git"
 	},
+	"bugs": {
+		"url": "https://github.com/kathyisawesome/wc-mnm-filter/issues"
+	},
 	"license": "GPL-3.0-or-later",
 	"version": "1.4.0",
-	"homepage": "http://woocommerce.com/products/woocommerce-mix-and-match/",
+	"homepage": "https://github.com/helgatheviking/wc-mnm-filter",
 	"main": "Gruntfile.js",
 	"devDependencies": {
 		"autoprefixer": "^10.4.2",
