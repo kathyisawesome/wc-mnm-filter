@@ -1,0 +1,8 @@
+{
+    "name": "kathyisawesome/wc-mnm-filter",
+    "description": "Dynmamic Term Filtering for WooCommerce Mix and Match Products.",
+    "homepage": "https://github.com/kathyisawesome/wc-mnm-filter",
+    "type": "wordpress-plugin",
+    "license": "GPL-3.0-or-later"
+}
+  
