@@ -179,7 +179,10 @@ class WC_MNM_Filter {
 							margin: 0 .5em .5em 0;
 							padding: .25em .5em;
 							background: gray;
-							}
+						}
+						.rtl .mnm_filter_button_group button {
+							margin: 0 0 .5em .5e;
+						}
 
 						.mnm_filter_button_group button.selected {
 							background: black;
