@@ -3,7 +3,7 @@
 * Plugin Name: WooCommerce Mix and Match - Filter by Terms
 * Plugin URI: https://woocommerce.com/products/woocommerce-mix-and-match-products
 * Description: Dynmamic Term Filtering for WooCommerce Mix and Match Products.
-* Version: 1.4.0
+* Version: 1.4.1
 * Author: Kathy Darling
 * Author URI: http://kathyisawesome.com/
 *
@@ -36,7 +36,7 @@ class WC_MNM_Filter {
 	 *
 	 * @var string
 	 */
-	public static $version = '1.4.0';
+	public static $version = '1.4.1';
 
 	/**
 	 * MNM URL.
