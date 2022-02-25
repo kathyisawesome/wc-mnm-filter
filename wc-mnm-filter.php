@@ -79,7 +79,7 @@ class WC_MNM_Filter {
 		add_action( 'init', array( __CLASS__, 'load_plugin_textdomain' ) );
 
 		// Add extra meta.
-		if ( is_callable( array( 'WC_MNM_Compatibility', 'is_db_version_gte' ) ) && WC_MNM_Compatibility::is_db_version_gte( '2.0' ) ) {
+		if ( is_callable( array( 'WC_MNM_Compatibility', 'is_version_gte' ) ) && WC_MNM_Compatibility::is_version_gte( '2.0' ) ) {
 			add_action( 'wc_mnm_admin_product_options', array( __CLASS__, 'additional_container_option' ) , 7, 2 );
 		} else {
 			add_action( 'woocommerce_mnm_product_options', array( __CLASS__, 'additional_container_option' ) , 7, 2 );
@@ -88,7 +88,7 @@ class WC_MNM_Filter {
 		add_action( 'woocommerce_admin_process_product_object', array( __CLASS__, 'process_meta' ), 20 );
 
 		// Display the filter and add term to product class.
-		if ( is_callable( array( 'WC_MNM_Compatibility', 'is_db_version_gte' ) ) && WC_MNM_Compatibility::is_db_version_gte( '2.0' ) ) {
+		if ( is_callable( array( 'WC_MNM_Compatibility', 'is_version_gte' ) ) && WC_MNM_Compatibility::is_version_gte( '2.0' ) ) {
 			add_action( 'wc_mnm_content_loop', array( __CLASS__, 'add_filter_navigation' ), 5 );
 			add_action( 'wc_mnm_before_child_items', array( __CLASS__, 'add_product_class_filter' ) );
 			add_action( 'wc_mnm_after_child_items', array( __CLASS__, 'remove_product_class_filter' ) );
