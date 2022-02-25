@@ -1,6 +1,6 @@
 <?php
 /**
-* Plugin Name: WooCommerce Mix and Match -  Filter by Terms
+* Plugin Name: WooCommerce Mix and Match - Filter by Terms
 * Plugin URI: https://woocommerce.com/products/woocommerce-mix-and-match-products
 * Description: Dynmamic Term Filtering for WooCommerce Mix and Match Products.
 * Version: 1.4.0
@@ -79,13 +79,24 @@ class WC_MNM_Filter {
 		add_action( 'init', array( __CLASS__, 'load_plugin_textdomain' ) );
 
 		// Add extra meta.
-		add_action( 'woocommerce_mnm_product_options', array( __CLASS__, 'additional_container_option' ) , 7, 2 );
+		if ( is_callable( array( 'WC_MNM_Helpers', 'is_db_version_gte' ) ) && WC_MNM_Helpers::is_db_version_gte( '2.0' ) ) {
+			add_action( 'wc_mnm_admin_product_options', array( __CLASS__, 'additional_container_option' ) , 7, 2 );
+		} else {
+			add_action( 'woocommerce_mnm_product_options', array( __CLASS__, 'additional_container_option' ) , 7, 2 );
+		}
+		
 		add_action( 'woocommerce_admin_process_product_object', array( __CLASS__, 'process_meta' ), 20 );
 
-		// Switch the quantity input.
-		add_action( 'woocommerce_mnm_content_loop', array( __CLASS__, 'add_filter_navigation' ), 5 );
-		add_action( 'woocommerce_before_mnm_items', array( __CLASS__, 'add_product_class_filter' ) );
-		add_action( 'woocommerce_after_mnm_items', array( __CLASS__, 'remove_product_class_filter' ) );
+		// Display the filter and add term to product class.
+		if ( is_callable( array( 'WC_MNM_Helpers', 'is_db_version_gte' ) ) && WC_MNM_Helpers::is_db_version_gte( '2.0' ) ) {
+			add_action( 'wc_mnm_content_loop', array( __CLASS__, 'add_filter_navigation' ), 5 );
+			add_action( 'wc_mnm_before_child_items', array( __CLASS__, 'add_product_class_filter' ) );
+			add_action( 'wc_mnm_after_child_items', array( __CLASS__, 'remove_product_class_filter' ) );
+		} else {
+			add_action( 'woocommerce_mnm_content_loop', array( __CLASS__, 'add_filter_navigation' ), 5 );
+			add_action( 'woocommerce_before_mnm_items', array( __CLASS__, 'add_product_class_filter' ) );
+			add_action( 'woocommerce_after_mnm_items', array( __CLASS__, 'remove_product_class_filter' ) );
+		}
 
 		// Register Scripts.
 		add_action( 'wp_enqueue_scripts', array( __CLASS__, 'register_scripts' ) );
