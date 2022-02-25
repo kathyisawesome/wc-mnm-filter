@@ -1,6 +1,7 @@
-( function( $ ) {
-
-
+  /**
+   * Main script.
+   */
+  ( function( $ ) {
 
   /**
    * Main container object.
@@ -9,14 +10,14 @@
 
     var filter = this;
 
-    this.$form     = container.$mnm_form;
+    this.$form        = container.$mnm_form;
     this.$productWrap = this.$form.find( '.mnm_child_products' );
-    this.$products = this.$productWrap.find( '.mnm_item' );
-    this.$filter   = this.$form.find( '.mnm_filter_button_group' );
-    this.$showAll  = this.$filter.find( 'button[data-filter="*"]' );
-    this.$buttons  = this.$filter.find( 'button[data-filter!="*"]' );
-    this.taxonomy  = this.$filter.data( 'taxonomy' );
-    this.$error    = $( '<div style="display:none" class="mnm_filter_error"></div>' );
+    this.$products    = this.$productWrap.find( '.mnm_item' );
+    this.$filter      = this.$form.find( '.mnm_filter_button_group' );
+    this.$showAll     = this.$filter.find( 'button[data-filter="*"]' );
+    this.$buttons     = this.$filter.find( 'button[data-filter!="*"]' );
+    this.taxonomy     = this.$filter.data( 'taxonomy' );
+    this.$error       = $( '<div style="display:none" class="mnm_filter_error"></div>' );
 
     // @todo- When MNM supports custom data attrs, use that instead of classes.
     this.classTerm = '.' + this.taxonomy + '-';
