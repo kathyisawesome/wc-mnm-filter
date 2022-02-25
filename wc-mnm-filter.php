@@ -306,7 +306,7 @@ class WC_MNM_Filter {
 	 */
 	public static function register_scripts() {
 		$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
-		wp_register_script( 'wc-mnm-filter', plugins_url( 'assets/js/wc-mnm-filter' . $suffix . '.js', __FILE__ ), array( 'wc-add-to-cart-mnm' ), self::$version, true );
+		wp_register_script( 'wc-mnm-filter', plugins_url( 'assets/js/frontend/wc-mnm-filter' . $suffix . '.js', __FILE__ ), array( 'wc-add-to-cart-mnm' ), self::$version, true );
 	}
 
 
