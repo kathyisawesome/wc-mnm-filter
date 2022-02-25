@@ -15,6 +15,8 @@
 *
 * WC requires at least: 4.6.0
 * WC tested up to: 4.6.0
+* GitHub Plugin URI: kathyisawesome/wc-mnm-filter
+* GitHub Plugin URI: https://github.com/wc-mnm-filter
 *
 * Copyright: © 2021 Kathy Darling
 * License: GNU General Public License v3.0
