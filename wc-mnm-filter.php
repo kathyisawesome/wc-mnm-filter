@@ -1,5 +1,5 @@
 <?php
-/*
+/**
 * Plugin Name: WooCommerce Mix and Match -  Filter by Terms
 * Plugin URI: https://woocommerce.com/products/woocommerce-mix-and-match-products
 * Description: Dynmamic Term Filtering for WooCommerce Mix and Match Products.
@@ -14,7 +14,8 @@
 * Tested up to: 5.3
 *
 * WC requires at least: 4.6.0
-* WC tested up to: 4.6.0
+* WC tested up to: 6.3.0
+*
 * GitHub Plugin URI: kathyisawesome/wc-mnm-filter
 * GitHub Plugin URI: https://github.com/wc-mnm-filter
 *
