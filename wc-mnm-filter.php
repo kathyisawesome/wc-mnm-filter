@@ -102,8 +102,8 @@ class WC_MNM_Filter {
 		add_action( 'wp_enqueue_scripts', array( __CLASS__, 'register_scripts' ) );
 
 		// Display Scripts.
-        add_action( 'woocommerce_mix-and-match_add_to_cart', array( __CLASS__, 'load_scripts' ) );
-        add_action( 'woocommerce_grouped-mnm_add_to_cart', array( __CLASS__, 'load_scripts' ) );
+		add_action( 'woocommerce_mix-and-match_add_to_cart', array( __CLASS__, 'load_scripts' ) );
+		add_action( 'woocommerce_grouped-mnm_add_to_cart', array( __CLASS__, 'load_scripts' ) );
 
 		// QuickView support.
 		add_action( 'wc_quick_view_enqueue_scripts', array( __CLASS__, 'load_scripts' ) );
