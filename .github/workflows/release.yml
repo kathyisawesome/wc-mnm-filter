@@ -106,6 +106,6 @@ jobs:
       - name: "Add package to GitHub releases."
         uses: softprops/action-gh-release@v1
         with:
-          files: ./deploy/${{ env.release_tag }}/${{ env.release_name }}.zip
+          files: ./deploy/${{ env.release_tag }}/${{ env.release_name }}-${{ env.release_tag }}.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
