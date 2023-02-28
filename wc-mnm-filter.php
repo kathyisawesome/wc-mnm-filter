@@ -10,11 +10,11 @@
 * Text Domain: wc-mnm-filter
 * Domain Path: /languages/
 *
-* Requires at least: 5.0
-* Tested up to: 5.3
+* Requires at least: 5.8
+* Tested up to: 6.0
 *
-* WC requires at least: 4.6.0
-* WC tested up to: 6.3.0
+* WC requires at least: 7.0.0
+* WC tested up to: 7.5.0
 *
 * GitHub Plugin URI: https://github.com/wc-mnm-filter
 * Primary Branch: trunk
