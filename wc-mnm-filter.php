@@ -315,7 +315,12 @@ class WC_MNM_Filter {
 	 */
 	public static function register_scripts() {
 		$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
-		wp_register_script( 'wc-mnm-filter', plugins_url( 'assets/js/frontend/wc-mnm-filter' . $suffix . '.js', __FILE__ ), array( 'wc-add-to-cart-mnm' ), self::$version, true );
+
+		$script_path    = 'assets/js/frontend/wc-mnm-filter' . $suffix . '.js';
+		$script_url     = plugins_url( $script_path, __FILE__ );
+		$script_version = WC_Mix_and_Match()->get_file_version( plugin_dir_path( __FILE__ ) . $script_path, self::$version );
+
+		wp_register_script( 'wc-mnm-filter', $script_url, array( 'wc-add-to-cart-mnm' ), $script_version, true );
 	}
 
 
