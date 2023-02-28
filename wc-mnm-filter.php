@@ -190,26 +190,41 @@ class WC_MNM_Filter {
 
 				?>
 					<style type="text/css">
-						.mnm_filter_button_group ul {
+						.mnm_filter_button_group .mnm_filters {
 							margin-bottom: 2em;
 							padding: 0;
 							list-style: none;
 							overflow: hidden;
+							width: 100%;
+							display: flex;
+							flex-wrap: wrap;
+							justify-content: space-between;
+							gap: .5em;
+							gap: .5em 1em; /* row-gap column gap */
+							row-gap: .5em;
+							column-gap: 1em;
 						}
-						.mnm_filter_button_group li {
-							float: left;
+						.mnm_filter_button_group .mnm_filters button {
+							margin-left: 0 !important;
+							margin-right: 0 !important;
+							width: 5rem;
+							flex-grow: 1;
+							flex-shrink: 0;
+							flex-basis: calc(100% / 3 - 1rem);
+							padding: .5em;
+							box-sizing: border-box;
+							line-height: 1.2;
 						}
-						.mnm_filter_button_group button {
-							margin: 0 .5em .5em 0;
-							padding: .25em .5em;
-							background: gray;
-						}
-						.rtl .mnm_filter_button_group button {
-							margin: 0 0 .5em .5e;
-						}
-
-						.mnm_filter_button_group button.selected {
+						.mnm_filter_button_group .mnm_filters button.selected {
 							background: black;
+							color: white;
+						}
+						
+						@media only screen and (min-width: 380px) {
+							/* full-width layout adjustment */
+							.summary-add-to-cart-form-mnm .mnm_filter_button_group .mnm_filters button {
+								flex-basis: calc(100% / 6 - 1rem);
+							}
 						}
 					</style>
 					

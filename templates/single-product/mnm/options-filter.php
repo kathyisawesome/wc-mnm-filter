@@ -14,7 +14,7 @@
  * @author  Kathy Darling
  * @package WooCommerce Mix and Match Filter/Templates
  * @since   1.0.0
- * @version 1.1.0
+ * @version 2.0.0
  */
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ){
@@ -29,19 +29,19 @@ if( $terms && ! is_wp_error( $terms ) ) { ?>
 
 		<p><?php _e( 'Filter by:', 'wc-mnm-filter' ); ?></p>
 
-  		<ul class="mnm_filters">
+  		<div class="mnm_filters">
 
-  		<li><button class="selected" data-filter="*"><?php esc_html_e( 'Show all', 'wc-mnm-filter' ); ?></button></li>
+  		<button class="selected" data-filter="*"><?php esc_html_e( 'Show all', 'wc-mnm-filter' ); ?></button>
 
 		<?php
 
 		foreach( $terms as $term ) {
-			printf( '<li><button data-filter="%s">%s</button></li>', $term->slug, $term->name ); 
+			printf( '<button data-filter="%s">%s</button>', $term->slug, $term->name ); 
 		}
 
 		?>
 
-		</ul>
+		</div>
 
 	</div>
 <?php
