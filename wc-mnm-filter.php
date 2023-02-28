@@ -39,6 +39,13 @@ class WC_MNM_Filter {
 	public static $version = '1.4.1';
 
 	/**
+	 * Required MNM Plugin version.
+	 *
+	 * @var string
+	 */
+	private static $required_mnm = '2.0.0';
+
+	/**
 	 * Product Taxonomies.
 	 *
 	 * @var array
@@ -70,6 +77,22 @@ class WC_MNM_Filter {
 
 		// Load translation files.
 		add_action( 'init', array( __CLASS__, 'load_plugin_textdomain' ) );
+
+		if ( ! is_callable( array( 'WC_MNM_Compatibility', 'is_version_gte' ) ) || ! WC_MNM_Compatibility::is_version_gte( '2.0' ) ) {
+
+			add_action( 'admin_notices', function() {
+				if ( ! current_user_can( 'manage_options' ) ) {
+					return;
+				}
+		
+				// Translators: %1$s = Plugin name, %2$s = Plugin version, %2$s = Required Mix and Match Plugin version.
+				$message = '<p>' . sprintf( esc_html__( 'To function properly, %1$s %2$s requires WooCommerce Mix and Match version %3$s', 'wc-mnm-filter' ), '<strong>' . esc_html( 'WooCommerce Mix and Match - Filter by Terms', 'wc-mnm-filter' ) . '</strong>', self::$version, self::$required_mnm ) . '</p>';
+
+				echo '<div class="notice notice-error">' . wp_kses_post( $message ) . '</div>';
+			} );
+
+			return false;
+		}
 
 		// Add extra meta.
 		if ( is_callable( array( 'WC_MNM_Compatibility', 'is_version_gte' ) ) && WC_MNM_Compatibility::is_version_gte( '2.0' ) ) {
