@@ -39,13 +39,6 @@ class WC_MNM_Filter {
 	public static $version = '1.4.1';
 
 	/**
-	 * MNM URL.
-	 *
-	 * @var string
-	 */
-	private static $mnm_url = 'https://woocommerce.com/products/woocommerce-mix-and-match-products/';
-
-	/**
 	 * Product Taxonomies.
 	 *
 	 * @var array
