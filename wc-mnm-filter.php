@@ -1,29 +1,29 @@
 <?php
 /**
-* Plugin Name: WooCommerce Mix and Match - Filter by Terms
-* Plugin URI: https://woocommerce.com/products/woocommerce-mix-and-match-products
-* Description: Dynmamic Term Filtering for WooCommerce Mix and Match Products.
-* Version: 1.4.1
-* Author: Kathy Darling
-* Author URI: http://kathyisawesome.com/
-*
-* Text Domain: wc-mnm-filter
-* Domain Path: /languages/
-*
-* Requires at least: 5.8
-* Tested up to: 6.0
-*
-* WC requires at least: 7.0.0
-* WC tested up to: 7.5.0
-*
-* GitHub Plugin URI: https://github.com/wc-mnm-filter
-* Primary Branch: trunk
-* Release Asset: true
-*
-* Copyright: © 2021 Kathy Darling
-* License: GNU General Public License v3.0
-* License URI: http://www.gnu.org/licenses/gpl-3.0.html
-*/
+ * Plugin Name: WooCommerce Mix and Match - Filter by Terms
+ * Plugin URI: https://woocommerce.com/products/woocommerce-mix-and-match-products
+ * Description: Dynmamic Term Filtering for WooCommerce Mix and Match Products.
+ * Version: 1.4.1
+ * Author: Kathy Darling
+ * Author URI: http://kathyisawesome.com/
+ *
+ * Text Domain: wc-mnm-filter
+ * Domain Path: /languages/
+ *
+ * Requires at least: 5.8
+ * Tested up to: 6.0
+ *
+ * WC requires at least: 7.0.0
+ * WC tested up to: 7.5.0
+ *
+ * GitHub Plugin URI: https://github.com/wc-mnm-filter
+ * Primary Branch: trunk
+ * Release Asset: true
+ *
+ * Copyright: © 2021 Kathy Darling
+ * License: GNU General Public License v3.0
+ * License URI: http://www.gnu.org/licenses/gpl-3.0.html
+ */
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
