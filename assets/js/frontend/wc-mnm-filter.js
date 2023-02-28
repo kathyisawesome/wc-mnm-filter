@@ -67,7 +67,7 @@
         }
 
         if( ! filter.$products.filter( filter.classTerm + filterValue ).length ) {
-          $(this).hide();
+          $(this).remove();
         } else {
           count_visible++;
         }
