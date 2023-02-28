@@ -15,12 +15,12 @@ Experimental mini-extension for [WooCommerce Mix and Match](https://woocommerce.
 
 ### Multi-term versus Single-term filtering
 
-By default, customers can select multiple terms to narrow their search. For example, Category A + Category B will display products in both. 
+By default, customers can only search by a single term at a time. 
 
-If you'd prefer to only search by a single term at a time, then you can add the following snippet to your child theme's `functions.php`.
+If you'd prefer to select multiple terms to narrow their search. For example, Category A + Category B will display products in both, then you can add the following snippet to your child theme's `functions.php`.
 
 ```
-add_filter( 'wc_mnm_filters_support_multi_term_filtering', '__return_false' );
+add_filter( 'wc_mnm_filters_support_multi_term_filtering', '__return_true' );
 ```
 
 ### Important
