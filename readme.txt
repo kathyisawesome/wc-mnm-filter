@@ -4,7 +4,7 @@ Contributors: helgatheviking
 Tags: woocommerce, product, container, boxes, kits, configurable, filter
 Requires at least: 5.0
 Tested up to: 5.5
-Stable tag: 1.4.1
+Stable tag: 2.0.1
 WC requires at least: 4.0
 WC tested up to: 4.7
 License: GNU General Public License v3.0
