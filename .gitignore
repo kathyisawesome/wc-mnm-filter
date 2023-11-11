@@ -12,6 +12,7 @@ sftp-config.json
 /node_modules/
 /deploy/
 build/
+vendor/
 npm-debug.log
 
 # Sass
@@ -32,6 +33,7 @@ Thumbs.db
 # Logs
 /logs
 package-lock.json
+composer.lock
 
 # Assets
 assets/js/frontend/*.min.js
