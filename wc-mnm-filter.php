@@ -108,6 +108,9 @@ class WC_MNM_Filter {
 		add_action( 'wc_mnm_before_child_items', array( __CLASS__, 'add_product_class_filter' ) );
 		add_action( 'wc_mnm_after_child_items', array( __CLASS__, 'remove_product_class_filter' ) );
 
+		// Add data to <form> for consumption by script.
+		add_action( 'wc_mnm_container_data_attributes', array( __CLASS__, 'container_data_attributes' ), 10, 2 );
+		
 		// Register Scripts.
 		add_action( 'wp_enqueue_scripts', array( __CLASS__, 'register_scripts' ) );
 
@@ -319,6 +322,24 @@ class WC_MNM_Filter {
 
 		return $classes;
 	}
+
+
+	/**
+	 * Add some props to the form class for script data.
+	 * 
+	 * @since 2.1.0
+	 *
+	 * @param  array $attributes
+	 * @param  obj WC_Product_Mix_and_Match $this
+	 * @return array
+	 */
+	public static function container_data_attributes( $attributes, $product ) {
+		$attributes['filter-columns']      = apply_filters( 'woocommerce_mnm_grid_layout_columns', 3, $product );
+		$attributes['filter-multi_terms' ] = apply_filters( 'wc_mnm_filters_support_multi_term_filtering', false, $product );
+		return $attributes;
+
+	}
+	
 	
 	/*-----------------------------------------------------------------------------------*/
 	/* Scripts and Styles */
@@ -330,6 +351,7 @@ class WC_MNM_Filter {
 	 * @return void
 	 */
 	public static function register_scripts() {
+
 		$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 
 		$script_path    = 'assets/js/frontend/wc-mnm-filter' . $suffix . '.js';
@@ -337,6 +359,12 @@ class WC_MNM_Filter {
 		$script_version = WC_Mix_and_Match()->get_file_version( plugin_dir_path( __FILE__ ) . $script_path, self::$version );
 
 		wp_register_script( 'wc-mnm-filter', $script_url, array( 'wc-add-to-cart-mnm' ), $script_version, true );
+
+		$l10n = array( 
+			'i18n_no_matches' => esc_html__( 'No matching products were found', 'wc-mnm-filter' ),
+		);
+		
+		wp_localize_script( 'wc-mnm-filter', 'WC_MNM_FILTER_PARAMS', $l10n );
 	}
 
 
@@ -345,17 +373,7 @@ class WC_MNM_Filter {
 	 * @return void
 	 */
 	public static function load_scripts() {
-		global $product;
-		
 		wp_enqueue_script( 'wc-mnm-filter' );
-		
-		$l10n = array( 
-			'columns'         => apply_filters( 'woocommerce_mnm_grid_layout_columns', 3, $product ),
-			'i18n_no_matches' => __( 'No matching products were found', 'wc-mnm-filter' ),
-			'multi_terms'     => apply_filters( 'wc_mnm_filters_support_multi_term_filtering', false, $product ),
-		);
-		
-		wp_localize_script( 'wc-mnm-filter', 'WC_MNM_FILTER_PARAMS', $l10n );
 	}
 
 

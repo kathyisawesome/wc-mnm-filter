@@ -95,7 +95,9 @@
 
       e.preventDefault();
 
-      if ( ! WC_MNM_FILTER_PARAMS.multi_terms ) {
+      let supportsMulti = filter.$form.data('filter-multi_terms') || false;
+
+      if ( ! supportsMulti ) {
         filter.$buttons.removeClass( 'selected' );
       }
 
@@ -139,9 +141,9 @@
       }
 
       // Fix grid layout classes.
-      if( filter.$form.hasClass( 'layout_grid' ) ) {
+      if ( filter.$form.hasClass( 'layout_grid' ) ) {
 
-        var columns = WC_MNM_FILTER_PARAMS.columns;
+        var columns = filter.$form.data('filter-columns') || 3;
 
         // Restore first/last loop classes
         filter.$products.removeClass( 'first' ).removeClass( 'last' );
