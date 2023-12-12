@@ -121,6 +121,9 @@ class WC_MNM_Filter {
 		// QuickView support.
 		add_action( 'wc_quick_view_enqueue_scripts', array( __CLASS__, 'load_scripts' ) );
 
+		// Declare Features compatibility.
+		add_action( 'before_woocommerce_init', array( __CLASS__, 'declare_features_compatibility' ) );
+
 	}
 
 	/*-----------------------------------------------------------------------------------*/
@@ -376,6 +379,26 @@ class WC_MNM_Filter {
 		wp_enqueue_script( 'wc-mnm-filter' );
 	}
 
+	/*-----------------------------------------------------------------------------------*/
+	/* Core Compat */
+	/*-----------------------------------------------------------------------------------*/
+
+	/**
+	 * Declare Features compatibility.
+	 *
+	 */
+	public static function declare_features_compatibility() {
+
+		if ( ! class_exists( 'Automattic\WooCommerce\Utilities\FeaturesUtil' ) ) {
+			return;
+		}
+
+		// HPOS (Custom Order tables) compatibility.
+		\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', plugin_basename( __FILE__ ), true );
+
+		// Cart and Checkout Blocks.
+		\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'cart_checkout_blocks', plugin_basename( __FILE__ ), true );
+	}
 
 	/*-----------------------------------------------------------------------------------*/
 	/* Helper Functions                                                                  */
