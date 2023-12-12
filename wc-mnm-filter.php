@@ -98,9 +98,7 @@ class WC_MNM_Filter {
 		// Add extra meta.
 		add_action( 'wc_mnm_admin_product_options', array( __CLASS__, 'additional_container_option' ) , 7, 2 );
 
-		// Add extra meta.
-		add_action( 'wc_mnm_admin_product_options', array( __CLASS__, 'additional_container_option' ) , 7, 2 );
-		
+		// Save extra meta.
 		add_action( 'woocommerce_admin_process_product_object', array( __CLASS__, 'process_meta' ), 20 );
 
 		// Display the filter and add term to product class.
