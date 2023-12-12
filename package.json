@@ -4,14 +4,14 @@
 	"description": "Dynmamic Term Filtering for WooCommerce Mix and Match Products.",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/helgatheviking/wc-mnm-filter.git"
+		"url": "https://github.com/kathyisawesome/wc-mnm-filter.git"
 	},
 	"bugs": {
 		"url": "https://github.com/kathyisawesome/wc-mnm-filter/issues"
 	},
 	"license": "GPL-3.0-or-later",
 	"version": "2.0.0",
-	"homepage": "https://github.com/helgatheviking/wc-mnm-filter",
+	"homepage": "https://github.com/kathyisawesome/wc-mnm-filter",
 	"main": "Gruntfile.js",
 	"devDependencies": {
 		"autoprefixer": "^10.4.13",
