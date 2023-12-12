@@ -62,11 +62,11 @@
         var filterValue = $(this).data( 'filter' );
 
         // Skip the "show all" button.
-        if( '*' === filterValue ) {
+        if ( '*' === filterValue ) {
           return true;
         }
 
-        if( ! filter.$products.filter( filter.classTerm + filterValue ).length ) {
+        if ( ! filter.$products.filter( filter.classTerm + filterValue ).length ) {
           $(this).remove();
         } else {
           count_visible++;
@@ -107,7 +107,7 @@
       var $selected = filter.$buttons.filter( '.selected' );
        
       // If "show all" (or no selection) remove classes and show all products.
-      if( '*' === $(this).data( 'filter' ) || $selected.length === 0 ) {
+      if ( '*' === $(this).data( 'filter' ) || $selected.length === 0 ) {
 
         filter.$buttons.removeClass( 'selected' );
         filter.$showAll.addClass( 'selected' );
@@ -127,7 +127,7 @@
 
         var $matches = filter.$products.filter( findClass.join('') );
 
-        if( $matches.length ) {
+        if ( $matches.length ) {
           filter.$productWrap.show();
           filter.$error.hide();
         } else {
@@ -167,7 +167,7 @@
     this.maybe_display = function() {
 
       // Only show "show all" if other buttons exist.
-      if( filter.$filter.data( 'visible' ) ) {
+      if ( filter.$filter.data( 'visible' ) ) {
         filter.$filter.show();
       }
 

@@ -14,7 +14,7 @@
  * @author  Kathy Darling
  * @package WooCommerce Mix and Match Filter/Templates
  * @since   1.0.0
- * @version 2.0.0
+ * @version 2.0.2
  */
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ){
@@ -23,11 +23,11 @@ if ( ! defined( 'ABSPATH' ) ){
 ?>
 <?php
 
-if( $terms && ! is_wp_error( $terms ) ) { ?>
+if ( $terms && ! is_wp_error( $terms ) ) { ?>
 
 	<div class="mnm_filter_button_group" style="display:none" data-taxonomy="<?php echo esc_attr( $taxonomy ); ?>">
 
-		<p><?php _e( 'Filter by:', 'wc-mnm-filter' ); ?></p>
+		<p><?php esc_html_e( 'Filter by:', 'wc-mnm-filter' ); ?></p>
 
   		<div class="mnm_filters">
 
