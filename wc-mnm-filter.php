@@ -44,7 +44,7 @@ class WC_MNM_Filter {
 	 *
 	 * @var string
 	 */
-	private static $required_mnm = '2.0.0';
+	private static $required_mnm = '2.4.0';
 
 	/**
 	 * Product Taxonomies.
