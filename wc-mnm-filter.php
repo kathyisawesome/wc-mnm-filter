@@ -210,19 +210,17 @@ class WC_MNM_Filter {
 							column-gap: 1em;
 						}
 						.mnm_filter_button_group .mnm_filters button {
-							margin-left: 0 !important;
-							margin-right: 0 !important;
-							width: 5rem;
 							flex-grow: 1;
 							flex-shrink: 0;
 							flex-basis: calc(100% / 3 - 1rem);
-							padding: .5em;
-							box-sizing: border-box;
-							line-height: 1.2;
+							opacity: .5;					
+						}
+						.mnm_filter_button_group .mnm_filters button:focus {
+							background-color: var(--wp--preset--color--contrast);
+							outline-style: none;		
 						}
 						.mnm_filter_button_group .mnm_filters button.selected {
-							background: black;
-							color: white;
+							opacity: 1;
 						}
 						
 						@media only screen and (min-width: 380px) {
