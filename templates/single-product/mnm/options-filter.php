@@ -31,12 +31,12 @@ if( $terms && ! is_wp_error( $terms ) ) { ?>
 
   		<div class="mnm_filters">
 
-  		<button class="selected" data-filter="*"><?php esc_html_e( 'Show all', 'wc-mnm-filter' ); ?></button>
+  		<button class="selected<?php echo esc_attr( WC_MNM_Core_Compatibility::wp_theme_get_element_class_name( 'button' ) ); ?>" data-filter="*"><?php esc_html_e( 'Show all', 'wc-mnm-filter' ); ?></button>
 
 		<?php
 
 		foreach( $terms as $term ) {
-			printf( '<button data-filter="%s">%s</button>', $term->slug, $term->name ); 
+			printf( '<button data-filter="%s" class="' . esc_attr( WC_MNM_Core_Compatibility::wp_theme_get_element_class_name( 'button' ) ) . '">%s</button>', esc_attr( $term->slug ), esc_html( $term->name ) ); 
 		}
 
 		?>
