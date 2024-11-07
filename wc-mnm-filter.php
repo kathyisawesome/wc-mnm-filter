@@ -131,8 +131,6 @@ class WC_MNM_Filter {
 
 	/**
 	 * Make the plugin translation ready
-	 *
-	 * @return void
 	 */
 	public static function load_plugin_textdomain() {
 		load_plugin_textdomain( 'wc-mnm-filter' , false , dirname( plugin_basename( __FILE__ ) ) .  '/languages/' );
@@ -346,8 +344,6 @@ class WC_MNM_Filter {
 
 	/**
 	 * Register scripts
-	 *
-	 * @return void
 	 */
 	public static function register_scripts() {
 
@@ -369,7 +365,6 @@ class WC_MNM_Filter {
 
 	/**
 	 * Load the script anywhere the MNN add to cart button is displayed
-	 * @return void
 	 */
 	public static function load_scripts() {
 		wp_enqueue_script( 'wc-mnm-filter' );
