@@ -119,6 +119,10 @@ class WC_MNM_Filter {
 		// QuickView support.
 		add_action( 'wc_quick_view_enqueue_scripts', array( __CLASS__, 'load_scripts' ) );
 
+		// Front end wrappers for category contents.
+		add_action( 'wc_mnm_category_caption', array( __CLASS__, 'add_open_category_wrapper' ), 0 );
+		add_action( 'wc_mnm_category_caption', array( __CLASS__, 'add_close_category_wrapper' ), 9999 );
+
 		// Declare Features compatibility.
 		add_action( 'before_woocommerce_init', array( __CLASS__, 'declare_features_compatibility' ) );
 
@@ -369,6 +373,34 @@ class WC_MNM_Filter {
 	public static function load_scripts() {
 		wp_enqueue_script( 'wc-mnm-filter' );
 	}
+
+
+	/*-----------------------------------------------------------------------------------*/
+	/* Front end display */
+	/*-----------------------------------------------------------------------------------*/
+
+
+	/**
+	 * Open wrapping div.
+	 * We need to wrap the category contents in a div so they can be hidden/shown when filtering.
+	 * 
+	 * @since 2.2.0
+	 *
+	 * @param obj $category WP_Term
+	 */
+	public static function add_open_category_wrapper( $category ) {
+		echo '<div class="wc-mnm-filter-category-wrapper" data-product_cat="' . esc_attr( $category->slug ) . '">';
+	}
+
+	/**
+	 * Close wrapping div.
+	 * 
+	 * @since 2.2.0
+	 */
+	public static function add_close_category_wrapper() {
+		echo '</div>';
+	}
+
 
 	/*-----------------------------------------------------------------------------------*/
 	/* Core Compat */
