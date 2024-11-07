@@ -13,6 +13,7 @@
     this.$form        = container.$mnm_form;
     this.$productWrap = this.$form.find( '.mnm_child_products' );
     this.$products    = this.$productWrap.find( '.mnm_item' );
+    this.$categories  = this.$form.find( '.wc-mnm-filter-category-wrapper' );
     this.$filter      = this.$form.find( '.mnm_filter_button_group' );
     this.$showAll     = this.$filter.find( 'button[data-filter="*"]' );
     this.$buttons     = this.$filter.find( 'button[data-filter!="*"]' );
@@ -112,6 +113,7 @@
         filter.$buttons.removeClass( 'selected' );
         filter.$showAll.addClass( 'selected' );
         filter.$productWrap.show();
+        filter.$categories.show();
         filter.$products.show();
         filter.$error.hide();
 
@@ -125,6 +127,7 @@
           findClass.push( filter.classTerm + $(this).data( 'filter' ) );
         });
 
+        // Find matching products.
         var $matches = filter.$products.filter( findClass.join('') );
 
         if ( $matches.length ) {
@@ -135,8 +138,20 @@
           filter.$error.show();
         }
 
+        // Show matching products.
         filter.$products.hide();
         $matches.show();
+
+        // Show non-empty categories.
+        filter.$categories.hide();
+
+        if ( filter.$productWrap.find( '.mnm_item:visible' ).length ) {
+          filter.$productWrap.each( function() {
+            if ( $(this).find( '.mnm_item:visible' ).length ) {
+              $(this).prev( '.wc-mnm-filter-category-wrapper' ).show();
+            }
+          });
+        }
 
       }
 
