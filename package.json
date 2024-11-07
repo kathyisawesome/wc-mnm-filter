@@ -14,7 +14,7 @@
 	"homepage": "https://github.com/kathyisawesome/wc-mnm-filter",
 	"main": "Gruntfile.js",
 	"devDependencies": {
-		"autoprefixer": "^10.4.16",
+		"autoprefixer": "^10.4.20",
 		"@lodder/grunt-postcss": "^3.1.1",
 		"grunt": "~1.6.1",
 		"grunt-contrib-clean": "^2.0.1",
@@ -32,7 +32,7 @@
 		"jshint-stylish": "~2.2.1",
 		"load-grunt-tasks": "~5.1.0",
 		"node-sass": "^9.0.0",
-		"postcss": "^8.4.32"
+		"postcss": "^8.4.47"
 	},
 	"scripts": {
 		"build": "grunt build",
