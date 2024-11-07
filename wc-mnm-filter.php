@@ -216,8 +216,8 @@ class WC_MNM_Filter {
 							opacity: .5;					
 						}
 						.mnm_filter_button_group .mnm_filters button:focus {
-							background-color: var(--wp--preset--color--contrast);
-							outline-style: none;		
+							outline-style: none;
+							background-color: var(--wp--preset--color--contrast, #111111);
 						}
 						.mnm_filter_button_group .mnm_filters button.selected {
 							opacity: 1;
