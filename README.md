@@ -5,7 +5,7 @@
 This is a developmental repo. Clone this repo and run `npm install && npm run build`   
 OR    
 [Download latest release](https://github.com/kathyisawesome/wc-mnm-filter/releases/latest/download/wc-mnm-filter.zip)
-
+|---|
 
 ### What's This?
 
